@@ -1,7 +1,6 @@
 {
 
   "development": {
-    "key": "AIzaSyDWG8D-soulgS-sYm1L-fzde3aomcw696E",
     "projectId": "botpit-1134",
     "routingTopic": "botpit-router-dev",
     "routingSubscription": "pitmaster-dev"

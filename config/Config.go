@@ -11,7 +11,6 @@ type Configuration struct {
 }
 
 type EnvironmentConfiguration struct {
-  Key string
   ProjectId string
   RoutingTopic string
   RoutingSubscription string
