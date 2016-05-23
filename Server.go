@@ -2,6 +2,8 @@ package main
 
 import "fmt"
 import "time"
+import "github.com/tenhaus/botpit/config"
+
 
 func main() {
   run()
@@ -14,7 +16,7 @@ func run() {
     // Check for new game requests
     // Check the status of existing games
     // Create or close games if needed
-
+    config.ConfigForEnvironment("development")
     fmt.Println("0 Games 0 Players")
   }
 }
