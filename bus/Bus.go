@@ -9,15 +9,15 @@ import "google.golang.org/cloud/storage"
 import "os"
 import "fmt"
 
-func Authenticate(key string) string {
-  context, err := cloudContext("wtf")
+func OpenPit(projectId string, routingTopic string) string {
+  context, err := cloudContext(projectId)
   if err != nil {
     fmt.Println("Error creating context", err)
     os.Exit(1)
   }
 
-  pubsub.CreateTopic(context, "wtftopic")
-  return key
+  pubsub.CreateTopic(context, routingTopic)
+  return projectId
 }
 
 func cloudContext(projectId string) (context.Context, error) {
