@@ -1,5 +1,3 @@
-// Ties it all together
-
 package main
 
 import "fmt"
