@@ -6,6 +6,9 @@ import "github.com/tenhaus/botpit/config"
 
 
 func main() {
+  config := config.ConfigForEnvironment("development")
+  fmt.Println(config.Key)
+
   run()
 }
 
@@ -16,7 +19,7 @@ func run() {
     // Check for new game requests
     // Check the status of existing games
     // Create or close games if needed
-    Config := config.ConfigForEnvironment("development")
-    fmt.Println("0 Games 0 Players", Config.Key)
+
+    fmt.Println("0 Games 0 Players")
   }
 }
