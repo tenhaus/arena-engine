@@ -17,17 +17,17 @@ type EnvironmentConfiguration struct {
 type MappedConfiguration map[string]EnvironmentConfiguration
 
 func ConfigForEnvironment(environment string) EnvironmentConfiguration {
-  file, e := ioutil.ReadFile("./config.json")
-  if e != nil {
-    fmt.Println("Couldn't read config %v\n", e)
+  file, readError := ioutil.ReadFile("./config.json")
+  if readError != nil {
+    fmt.Println("Couldn't read config %v\n", readError)
     os.Exit(1);
   }
 
   var config MappedConfiguration
-  err := json.Unmarshal(file, &config)
+  unmarshalError := json.Unmarshal(file, &config)
 
-  if err != nil {
-    fmt.Println("Couldn't parse config %v\n", e)
+  if unmarshalError != nil {
+    fmt.Println("Couldn't parse config %v\n", unmarshalError)
     os.Exit(1);
   }
 
