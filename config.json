@@ -1,5 +1,11 @@
 {
+
   "development": {
     "key": "AIzaSyDWG8D-soulgS-sYm1L-fzde3aomcw696E"
+  },
+
+  "production": {
+    "key": ""
   }
+
 }
