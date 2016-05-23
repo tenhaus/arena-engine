@@ -10,7 +10,7 @@ import "os"
 import "fmt"
 import "log"
 
-func OpenPit(projectId string, routingTopic string, subscription string) {
+func OpenPit(projectId string, routingTopic string, subscription string, routingChannel chan string) {
   context, err := cloudContext(projectId)
   if err != nil {
     fmt.Println("Error creating context", err)
@@ -22,10 +22,10 @@ func OpenPit(projectId string, routingTopic string, subscription string) {
 
   pubsub.CreateTopic(context, routingTopic)
   pubsub.CreateSub(context, subscription, routingTopic, 0, "")
-  go subscribe(context, subscription);
+  go subscribe(context, subscription, routingChannel);
 }
 
-func subscribe(context context.Context, subscription string) {
+func subscribe(context context.Context, subscription string, routingChannel chan string) {
 
   for {
     // infinite loop while we blockwait for messages
@@ -36,7 +36,8 @@ func subscribe(context context.Context, subscription string) {
     }
 
     for _, m := range msgs {
-      fmt.Println("Message", m);
+      routingChannel <- string(m.Data)
+      pubsub.Ack(context, subscription, m.AckID)
     }
   }
 
