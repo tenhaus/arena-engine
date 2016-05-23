@@ -9,14 +9,19 @@ import "google.golang.org/cloud/storage"
 import "os"
 import "fmt"
 
-func OpenPit(projectId string, routingTopic string) string {
+func OpenPit(projectId string, routingTopic string, subscription string) string {
   context, err := cloudContext(projectId)
   if err != nil {
     fmt.Println("Error creating context", err)
     os.Exit(1)
   }
 
+  // Create the topic for routing incoming game requests
+  // and subscribe to it
+
   pubsub.CreateTopic(context, routingTopic)
+  pubsub.CreateSub(context, subscription, routingTopic, 0, "")
+
   return projectId
 }
 

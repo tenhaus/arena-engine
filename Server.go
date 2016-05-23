@@ -7,7 +7,7 @@ import "github.com/tenhaus/botpit/bus"
 
 func main() {
   config := config.ConfigForEnvironment("development")
-  bus.OpenPit(config.ProjectId, config.RoutingTopic)
+  bus.OpenPit(config.ProjectId, config.RoutingTopic, config.RoutingSubscription)
 
   run()
 }

@@ -3,13 +3,15 @@
   "development": {
     "key": "AIzaSyDWG8D-soulgS-sYm1L-fzde3aomcw696E",
     "projectId": "botpit-1134",
-    "routingTopic": "botpit-router-dev"
+    "routingTopic": "botpit-router-dev",
+    "routingSubscription": "pitmaster-dev"
   },
 
   "production": {
     "key": "",
     "projectId": "botpit-1134",
-    "routingTopic": "botpit-router"
+    "routingTopic": "botpit-router",
+    "routingSubscription": "pitmaster"
   }
 
 }

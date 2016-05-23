@@ -14,6 +14,7 @@ type EnvironmentConfiguration struct {
   Key string
   ProjectId string
   RoutingTopic string
+  RoutingSubscription string
 }
 
 type MappedConfiguration map[string]EnvironmentConfiguration
