@@ -8,8 +8,9 @@ import "google.golang.org/cloud"
 import "google.golang.org/cloud/storage"
 import "os"
 import "fmt"
+import "log"
 
-func OpenPit(projectId string, routingTopic string, subscription string) string {
+func OpenPit(projectId string, routingTopic string, subscription string) {
   context, err := cloudContext(projectId)
   if err != nil {
     fmt.Println("Error creating context", err)
@@ -21,8 +22,24 @@ func OpenPit(projectId string, routingTopic string, subscription string) string 
 
   pubsub.CreateTopic(context, routingTopic)
   pubsub.CreateSub(context, subscription, routingTopic, 0, "")
+  go subscribe(context, subscription);
+}
 
-  return projectId
+func subscribe(context context.Context, subscription string) {
+
+  for {
+    // infinite loop while we blockwait for messages
+    msgs, err := pubsub.PullWait(context, subscription, 1)
+
+    if err != nil {
+      log.Fatalf("could not pull: %v", err)
+    }
+
+    for _, m := range msgs {
+      fmt.Println("Message", m);
+    }
+  }
+
 }
 
 func cloudContext(projectId string) (context.Context, error) {
