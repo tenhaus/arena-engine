@@ -1,9 +1,15 @@
 {
+
   "development": {
-    "key": "AIzaSyDWG8D-soulgS-sYm1L-fzde3aomcw696E"
+    "key": "AIzaSyDWG8D-soulgS-sYm1L-fzde3aomcw696E",
+    "projectId" : "",
+    "routingChannel": ""
   },
 
   "production": {
-    "key": ""
+    "key": "",
+    "projectId" : "",
+    "routingChannel": ""
   }
+
 }

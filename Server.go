@@ -3,12 +3,12 @@ package main
 import "fmt"
 import "time"
 import "github.com/tenhaus/botpit/config"
-
+import "github.com/tenhaus/botpit/bus"
 
 func main() {
   config := config.ConfigForEnvironment("development")
-  fmt.Println(config.Key)
-
+  bus.Authenticate(config.Key)
+  
   run()
 }
 
