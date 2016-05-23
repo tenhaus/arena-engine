@@ -29,7 +29,7 @@ func subscribe(context context.Context, subscription string, routingChannel chan
 
   for {
     // infinite loop while we blockwait for messages
-    msgs, err := pubsub.PullWait(context, subscription, 1)
+    msgs, err := pubsub.PullWait(context, subscription, 10)
 
     if err != nil {
       log.Fatalf("could not pull: %v", err)
