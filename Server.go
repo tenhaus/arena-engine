@@ -16,7 +16,7 @@ func run() {
     // Check for new game requests
     // Check the status of existing games
     // Create or close games if needed
-    config.ConfigForEnvironment("development")
-    fmt.Println("0 Games 0 Players")
+    Config := config.ConfigForEnvironment("development")
+    fmt.Println("0 Games 0 Players", Config.Key)
   }
 }
