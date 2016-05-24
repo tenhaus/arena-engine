@@ -16,6 +16,7 @@ import "github.com/tenhaus/botpit/cloud"
 // Somehow retrieve some token the user can use to authenticate
 // Send the token back
 
+
 func CreateUser(userHandle string, projectId string) (string, error) {
   context, err := cloud.CloudContext(projectId)
 
@@ -28,8 +29,10 @@ func CreateUser(userHandle string, projectId string) (string, error) {
   return "this will be a uuid from somewhere", nil
 }
 
+
 func CreateServiceAccount(uuid string) {
 }
+
 
 func CreateTopic(context context.Context, uuid string) {
   pubsub.CreateTopic(context, uuid)
