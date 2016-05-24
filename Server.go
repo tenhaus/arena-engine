@@ -17,8 +17,8 @@ func main() {
 
 func run(routingChannel chan string) {
   timer := time.Tick(100 * time.Millisecond)
-
   fmt.Println("Running");
+
   for range timer {
     msg := <-routingChannel
     fmt.Println(msg)
