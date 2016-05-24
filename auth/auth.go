@@ -5,7 +5,7 @@ package auth
 import "fmt"
 import "google.golang.org/cloud/pubsub"
 import "golang.org/x/net/context"
-
+import "github.com/tenhaus/botpit/config"
 import "github.com/tenhaus/botpit/cloud"
 
 // So I think we want to:
@@ -17,22 +17,23 @@ import "github.com/tenhaus/botpit/cloud"
 // Send the token back
 
 
-func CreateUser(userHandle string, projectId string) (string, error) {
-  context, err := cloud.CloudContext(projectId)
+// func CreateUser(userHandle string, projectId string) (string, error) {
+//   context, err := cloud.CloudContext(projectId)
+//
+//   if err != nil {
+//     fmt.Println("Error creating context", err)
+//     return "", err
+//   }
+//
+//   CreateTopic(context, "asdfsdf")
+//   return "this will be a uuid from somewhere", nil
+// }
 
-  if err != nil {
-    fmt.Println("Error creating context", err)
-    return "", err
-  }
-
-  CreateTopic(context, "asdfsdf")
-  return "this will be a uuid from somewhere", nil
+func CreateUserAccount(handle string) {
 }
-
 
 func CreateServiceAccount(uuid string) {
 }
-
 
 func CreateTopic(context context.Context, uuid string) {
   pubsub.CreateTopic(context, uuid)
