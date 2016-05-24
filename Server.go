@@ -9,7 +9,8 @@ func main() {
   config := config.ConfigForEnvironment("development")
 
   routingChannel := make(chan string)
-  bus.OpenPit(config.ProjectId, config.RoutingTopic, config.RoutingSubscription, routingChannel)
+  bus.OpenPit(config.ProjectId, config.RoutingTopic,
+    config.RoutingSubscription, routingChannel)
 
   run(routingChannel)
 }
