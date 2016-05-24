@@ -1,0 +1,7 @@
+package auth
+
+import "testing"
+
+func TestSomething(t *testing.T) {
+  
+}

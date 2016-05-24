@@ -2,10 +2,11 @@
 
 package auth
 
-import "os"
 import "fmt"
-import "github.com/tenhaus/botpit/cloud"
+import "google.golang.org/cloud/pubsub"
 import "golang.org/x/net/context"
+
+import "github.com/tenhaus/botpit/cloud"
 
 // So I think we want to:
 //
@@ -15,14 +16,15 @@ import "golang.org/x/net/context"
 // Somehow retrieve some token the user can use to authenticate
 // Send the token back
 
-func CreateUser(userHandle string, projectId string) (uuid string, error) {
+func CreateUser(userHandle string, projectId string) (string, error) {
   context, err := cloud.CloudContext(projectId)
 
   if err != nil {
     fmt.Println("Error creating context", err)
-    return nil, err
+    return "", err
   }
 
+  CreateTopic(context, "asdfsdf")
   return "this will be a uuid from somewhere", nil
 }
 
