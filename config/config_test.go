@@ -7,6 +7,10 @@ func TestGet(t *testing.T) {
   config := Get()
   environment := os.Getenv("BOTPIT_ENV")
 
+  if environment == "" {
+    t.Errorf("No environment set at $BOTPIT_ENV")
+  }
+
   if environment == "development" &&
      config.RoutingSubscription != "pitmaster-dev" {
       t.Errorf("Wrong config for dev environment", environment, config)
