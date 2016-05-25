@@ -1,14 +1,17 @@
 package config
 
-import "os"
-import "fmt"
-import "io/ioutil"
-import "encoding/json"
-import "google.golang.org/cloud"
-import "golang.org/x/net/context"
-import "golang.org/x/oauth2/google"
-import "google.golang.org/cloud/pubsub"
-import "google.golang.org/cloud/storage"
+import (
+  "os"
+  "fmt"
+  "io/ioutil"
+  "encoding/json"
+  "google.golang.org/cloud"
+  "golang.org/x/net/context"
+  "golang.org/x/oauth2/google"
+  "google.golang.org/cloud/pubsub"
+  "google.golang.org/cloud/storage"
+  "google.golang.org/cloud/datastore"
+)
 
 type Configuration struct {
   Development EnvironmentConfiguration
@@ -23,6 +26,19 @@ type EnvironmentConfiguration struct {
 }
 
 type MappedConfiguration map[string]EnvironmentConfiguration
+
+func GetClient() (*datastore.Client, error) {
+  cfg := GetConfig()
+  context, _ := GetContext()
+  client, clientErr := datastore.NewClient(context, cfg.ProjectId)
+
+  if clientErr != nil {
+    fmt.Println(clientErr)
+    os.Exit(1)
+  }
+
+  return client, nil
+}
 
 func GetConfig() EnvironmentConfiguration {
   environment := os.Getenv("BOTPIT_ENV")

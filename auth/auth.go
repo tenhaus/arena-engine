@@ -23,13 +23,8 @@ type Fighter struct {
 }
 
 func CreateUserAccount(handle string) (string, error) {
-  cfg := config.GetConfig()
+  client, _ := config.GetClient()
   context, _ := config.GetContext()
-  client, clientErr := datastore.NewClient(context, cfg.ProjectId)
-
-  if clientErr != nil {
-    return "", clientErr
-  }
 
   k := datastore.NewKey(context, "Fighter", "", 0, nil)
   e := new(Fighter)
@@ -43,6 +38,18 @@ func CreateUserAccount(handle string) (string, error) {
 
   return key.Encode(), nil
 }
+
+// func DeleteUserAccount(encodedId string) {
+//   cfg := config.GetConfig()
+//   context, _ := config.GetContext()
+//   client, clientErr := datastore.NewClient(context, cfg.ProjectId)
+//
+//   if clientErr != nil {
+//     return "", clientErr
+//   }
+//
+//
+// }
 
 func CreateServiceAccount(uuid string) {
 }
