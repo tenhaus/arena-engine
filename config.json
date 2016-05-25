@@ -3,14 +3,16 @@
   "development": {
     "projectId": "botpit-1134",
     "routingTopic": "botpit-router-dev",
-    "routingSubscription": "pitmaster-dev"
+    "routingSubscription": "pitmaster-dev",
+    "userBucket": "fighters-dev"
   },
 
   "production": {
     "key": "",
     "projectId": "botpit-1134",
     "routingTopic": "botpit-router",
-    "routingSubscription": "pitmaster"
+    "routingSubscription": "pitmaster",
+    "userBucket": "fighters"
   }
 
 }

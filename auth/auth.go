@@ -1,13 +1,5 @@
 // Manages users and permissions
 
-package auth
-
-import "fmt"
-import "google.golang.org/cloud/pubsub"
-import "golang.org/x/net/context"
-import "github.com/tenhaus/botpit/config"
-import "github.com/tenhaus/botpit/cloud"
-
 // So I think we want to:
 //
 // Create a uuid for a user (probably pull it from a db)
@@ -17,19 +9,49 @@ import "github.com/tenhaus/botpit/cloud"
 // Send the token back
 
 
-// func CreateUser(userHandle string, projectId string) (string, error) {
-//   context, err := cloud.CloudContext(projectId)
-//
-//   if err != nil {
-//     fmt.Println("Error creating context", err)
-//     return "", err
-//   }
-//
-//   CreateTopic(context, "asdfsdf")
-//   return "this will be a uuid from somewhere", nil
-// }
+package auth
 
-func CreateUserAccount(handle string) {
+import (
+  "fmt"
+  "google.golang.org/cloud/pubsub"
+  "google.golang.org/cloud/datastore"
+  "golang.org/x/net/context"
+  "github.com/tenhaus/botpit/config"
+)
+
+type Fighter struct {
+  Handle string
+  Name string
+  ID string
+}
+
+func CreateUserAccount(handle string) (string, error) {
+  cfg := config.GetConfig()
+  context, _ := config.GetContext()
+  client, err := datastore.NewClient(context, cfg.ProjectId)
+
+  if err != nil {
+    return "", err
+  }
+
+  q := datastore.NewQuery("Fighter")
+
+  for t:= client.Run(context, q);; {
+    var f Fighter
+    key, err := t.Next(&f)
+
+    if err == datastore.Done {
+      break
+    }
+
+    if err != nil {
+      // whatever
+    }
+
+    fmt.Println(key, f.Name)
+  }
+
+  return "eh", nil
 }
 
 func CreateServiceAccount(uuid string) {

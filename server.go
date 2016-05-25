@@ -3,10 +3,12 @@ package main
 import "fmt"
 import "time"
 import "github.com/tenhaus/botpit/bus"
+import "github.com/tenhaus/botpit/auth"
 
 func main() {
   routingChannel := make(chan string)
   bus.OpenPit(routingChannel)
+  auth.CreateUserAccount("NecroPorkBopper")
 
   run(routingChannel)
 }
