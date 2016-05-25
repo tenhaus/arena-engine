@@ -30,7 +30,7 @@ type MappedConfiguration map[string]EnvironmentConfiguration
 func GetClientWithContext() (*datastore.Client, context.Context) {
   client, _ := GetClient()
   context, _ := GetContext()
-  
+
   return client, context
 }
 
@@ -65,6 +65,20 @@ func GetContext() (context.Context, error) {
 
 	return cloud.WithContext(ctx, config.ProjectId, httpClient), nil
 }
+
+func GetIAMContext() (context.Context, error) {
+  config := GetConfig()
+  ctx := context.Background()
+	httpClient, err := google.DefaultClient(
+    ctx, "https://www.googleapis.com/auth/iam", "https://www.googleapis.com/auth/cloud-platform")
+
+	if err != nil {
+		return nil, err
+	}
+
+	return cloud.WithContext(ctx, config.ProjectId, httpClient), nil
+}
+
 
 func configForEnvironment(environment string) EnvironmentConfiguration {
   configPath := os.Getenv("BOTPIT_CONFIG")

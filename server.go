@@ -2,14 +2,17 @@ package main
 
 import "fmt"
 import "time"
-import "github.com/tenhaus/botpit/bus"
+// import "github.com/tenhaus/botpit/bus"
 import "github.com/tenhaus/botpit/auth"
 
 func main() {
-  routingChannel := make(chan string)
-  bus.OpenPit(routingChannel)
+  // routingChannel := make(chan string)
+  // bus.OpenPit(routingChannel)
 
-  run(routingChannel)
+  url, _ := auth.CreateServiceAccount("asdf")
+  fmt.Println(url)
+
+  // run(routingChannel)
 }
 
 func run(routingChannel chan string) {

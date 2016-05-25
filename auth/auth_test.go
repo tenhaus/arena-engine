@@ -15,3 +15,7 @@ func TestCreateAndDeleteUserAccount(t *testing.T) {
     t.Errorf("Couldn't delete the account", deleteError)
   }
 }
+
+func TestCreateServiceAccount(t *testing.T) {
+  
+}
