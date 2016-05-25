@@ -18,8 +18,16 @@ type EnvironmentConfiguration struct {
 
 type MappedConfiguration map[string]EnvironmentConfiguration
 
-func ConfigForEnvironment(environment string) EnvironmentConfiguration {
-  file, readError := ioutil.ReadFile("./config.json")
+func Get() EnvironmentConfiguration {
+  environment := os.Getenv("BOTPIT_ENV")
+  config := configForEnvironment(environment)
+  return config
+}
+
+func configForEnvironment(environment string) EnvironmentConfiguration {
+  configPath := os.Getenv("BOTPIT_CONFIG")
+  file, readError := ioutil.ReadFile(configPath)
+
   if readError != nil {
     fmt.Println("Couldn't read config %v\n", readError)
     os.Exit(1);
