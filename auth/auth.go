@@ -38,17 +38,24 @@ func CreateUserAccount(handle string) (string, error) {
   return key.Encode(), nil
 }
 
-// func DeleteUserAccount(encodedId string) {
-//   cfg := config.GetConfig()
-//   context, _ := config.GetContext()
-//   client, clientErr := datastore.NewClient(context, cfg.ProjectId)
-//
-//   if clientErr != nil {
-//     return "", clientErr
-//   }
-//
-//
-// }
+func DeleteUserAccount(encodedId string) error {
+  cfg := config.GetConfig()
+  context, _ := config.GetContext()
+  client, clientErr := datastore.NewClient(context, cfg.ProjectId)
+
+  if clientErr != nil {
+    return clientErr
+  }
+
+  k, decodeError := datastore.DecodeKey(encodedId)
+
+  if decodeError != nil {
+    return decodeError
+  }
+
+  deleteError := client.Delete(context, k)
+  return deleteError
+}
 
 func CreateServiceAccount(uuid string) {
 }

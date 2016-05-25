@@ -2,12 +2,16 @@ package auth
 
 import "testing"
 
-func TestCreateUserAccount(t *testing.T) {
-  encodedId, err := CreateUserAccount("NecroPorkBopper")
+func TestCreateAndDeleteUserAccount(t *testing.T) {
+  encodedId, createError := CreateUserAccount("NecroPorkBopper")
 
-  if(err != nil || encodedId == "") {
-    t.Errorf("Couldn't create the account", err)
+  if createError != nil || encodedId == "" {
+    t.Errorf("Couldn't create the account", createError)
   }
 
+  deleteError := DeleteUserAccount(encodedId)
 
+  if deleteError != nil {
+    t.Errorf("Couldn't delete the account", deleteError)
+  }
 }

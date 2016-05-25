@@ -8,7 +8,6 @@ import "github.com/tenhaus/botpit/auth"
 func main() {
   routingChannel := make(chan string)
   bus.OpenPit(routingChannel)
-  auth.CreateUserAccount("NecroPorkBopper")
 
   run(routingChannel)
 }
