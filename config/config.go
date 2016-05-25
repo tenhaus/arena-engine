@@ -27,6 +27,13 @@ type EnvironmentConfiguration struct {
 
 type MappedConfiguration map[string]EnvironmentConfiguration
 
+func GetClientWithContext() (*datastore.Client, context.Context) {
+  client, _ := GetClient()
+  context, _ := GetContext()
+  
+  return client, context
+}
+
 func GetClient() (*datastore.Client, error) {
   cfg := GetConfig()
   context, _ := GetContext()

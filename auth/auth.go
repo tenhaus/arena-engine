@@ -23,8 +23,7 @@ type Fighter struct {
 }
 
 func CreateUserAccount(handle string) (string, error) {
-  client, _ := config.GetClient()
-  context, _ := config.GetContext()
+  client, context := config.GetClientWithContext()
 
   k := datastore.NewKey(context, "Fighter", "", 0, nil)
   e := new(Fighter)
