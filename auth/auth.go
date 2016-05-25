@@ -12,7 +12,6 @@
 package auth
 
 import (
-  "fmt"
   "google.golang.org/cloud/pubsub"
   "google.golang.org/cloud/datastore"
   "golang.org/x/net/context"
@@ -21,37 +20,28 @@ import (
 
 type Fighter struct {
   Handle string
-  Name string
-  ID string
 }
 
 func CreateUserAccount(handle string) (string, error) {
   cfg := config.GetConfig()
   context, _ := config.GetContext()
-  client, err := datastore.NewClient(context, cfg.ProjectId)
+  client, clientErr := datastore.NewClient(context, cfg.ProjectId)
 
-  if err != nil {
-    return "", err
+  if clientErr != nil {
+    return "", clientErr
   }
 
-  q := datastore.NewQuery("Fighter")
+  k := datastore.NewKey(context, "Fighter", "", 0, nil)
+  e := new(Fighter)
+  e.Handle = handle
 
-  for t:= client.Run(context, q);; {
-    var f Fighter
-    key, err := t.Next(&f)
+  key, putError := client.Put(context, k, e)
 
-    if err == datastore.Done {
-      break
-    }
-
-    if err != nil {
-      // whatever
-    }
-
-    fmt.Println(key, f.Name)
+  if putError != nil {
+    return "", putError
   }
 
-  return "eh", nil
+  return key.Encode(), nil
 }
 
 func CreateServiceAccount(uuid string) {
