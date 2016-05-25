@@ -1,9 +1,14 @@
 package config
 
-import "fmt"
 import "os"
-import "encoding/json"
+import "fmt"
 import "io/ioutil"
+import "encoding/json"
+import "google.golang.org/cloud"
+import "golang.org/x/net/context"
+import "golang.org/x/oauth2/google"
+import "google.golang.org/cloud/pubsub"
+import "google.golang.org/cloud/storage"
 
 type Configuration struct {
   Development EnvironmentConfiguration
@@ -18,10 +23,23 @@ type EnvironmentConfiguration struct {
 
 type MappedConfiguration map[string]EnvironmentConfiguration
 
-func Get() EnvironmentConfiguration {
+func GetConfig() EnvironmentConfiguration {
   environment := os.Getenv("BOTPIT_ENV")
   config := configForEnvironment(environment)
   return config
+}
+
+func GetContext() (context.Context, error) {
+  config := GetConfig()
+  ctx := context.Background()
+	httpClient, err := google.DefaultClient(
+    ctx, storage.ScopeFullControl, pubsub.ScopePubSub)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return cloud.WithContext(ctx, config.ProjectId, httpClient), nil
 }
 
 func configForEnvironment(environment string) EnvironmentConfiguration {

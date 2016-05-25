@@ -2,15 +2,11 @@ package main
 
 import "fmt"
 import "time"
-import "github.com/tenhaus/botpit/config"
 import "github.com/tenhaus/botpit/bus"
 
 func main() {
-  config := config.ConfigForEnvironment("development")
-
   routingChannel := make(chan string)
-  bus.OpenPit(config.ProjectId, config.RoutingTopic,
-    config.RoutingSubscription, routingChannel)
+  bus.OpenPit(routingChannel)
 
   run(routingChannel)
 }
