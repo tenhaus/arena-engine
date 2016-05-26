@@ -3,14 +3,22 @@ package main
 import "fmt"
 import "time"
 // import "github.com/tenhaus/botpit/bus"
-import "github.com/tenhaus/botpit/auth"
+import "github.com/tenhaus/botpit/accounts"
 
 func main() {
   // routingChannel := make(chan string)
   // bus.OpenPit(routingChannel)
+  var account accounts.ServiceAccount
+  testAccountName := "testeisadorkdfuhdddddbibcgrus"
+  createError := accounts.CreateServiceAccount(testAccountName, &account)
+  if createError == nil {
+    fmt.Println(account)
+    err := accounts.DeleteServiceAccount(account.UniqueId)
+    fmt.Println(err)
+  } else {
+    fmt.Println(createError)
+  }
 
-  url, _ := auth.CreateServiceAccount("hdhdhdhdhdhdhd")
-  fmt.Println(url)
 
   // run(routingChannel)
 }

@@ -1,4 +1,4 @@
-package auth
+package accounts
 
 import "testing"
 
@@ -17,5 +17,18 @@ func TestCreateAndDeleteUserAccount(t *testing.T) {
 }
 
 func TestCreateServiceAccount(t *testing.T) {
-  
+  var account ServiceAccount
+  testAccountName := "testisadorkddbibcgrus"
+
+  createError := CreateServiceAccount(testAccountName, &account)
+
+  if createError != nil {
+    t.Errorf("Error creating the test account")
+  }
+
+  deleteError := DeleteServiceAccount(account.UniqueId)
+
+  if deleteError != nil {
+    t.Errorf("Error deleting the test account")
+  }
 }
