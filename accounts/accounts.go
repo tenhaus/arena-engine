@@ -40,13 +40,19 @@ type ServiceAccount struct {
   Oauth2ClientId string
 }
 
-func CreateServiceAccount(encodedId string, account *ServiceAccount) error {
+func CreateServiceAccount(handle string, account *ServiceAccount) error {
+  handleLength := len(handle)
+
+  if handleLength < 6 || handleLength > 30 {
+    return fmt.Errorf("Handle must be between 6 and 30 characters")
+  }
+
   cfg := config.GetConfig()
   context := context.Background()
 
   // Build the url and parameters
   apiUrl := fmt.Sprintf("https://iam.googleapis.com/v1/projects/%s/serviceAccounts", cfg.ProjectId)
-  jsonParameters := fmt.Sprintf(`{"accountId": "%s", "serviceAccount": {"displayName": "%s"}}`, encodedId, encodedId)
+  jsonParameters := fmt.Sprintf(`{"accountId": "%s", "serviceAccount": {"displayName": "%s"}}`, handle, handle)
   b := strings.NewReader(jsonParameters)
   fmt.Println(apiUrl)
   fmt.Println(jsonParameters)
@@ -113,6 +119,12 @@ func CreateTopic(context context.Context, uuid string) {
 }
 
 func CreateUserAccount(handle string) (string, error) {
+  handleLength := len(handle)
+
+  if handleLength < 6 || handleLength > 30 {
+    return "", fmt.Errorf("Handle must be between 6 and 30 characters")
+  }
+
   client, context := config.GetClientWithContext()
 
   k := datastore.NewKey(context, "Fighter", "", 0, nil)

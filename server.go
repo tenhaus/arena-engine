@@ -9,7 +9,7 @@ func main() {
   // routingChannel := make(chan string)
   // bus.OpenPit(routingChannel)
   var account accounts.ServiceAccount
-  testAccountName := "testeisadorkdfuhdddddbibcgrus"
+  testAccountName := "testeisadorkdasdfasdfsdffuhdddddbibcgrus"
   createError := accounts.CreateServiceAccount(testAccountName, &account)
   if createError == nil {
     fmt.Println(account)

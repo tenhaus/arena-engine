@@ -18,17 +18,19 @@ func TestCreateAndDeleteUserAccount(t *testing.T) {
 
 func TestCreateServiceAccount(t *testing.T) {
   var account ServiceAccount
-  testAccountName := "testisadorkddbibcgrus"
+  testAccountName := "testisadorkddsf"
 
   createError := CreateServiceAccount(testAccountName, &account)
 
   if createError != nil {
-    t.Errorf("Error creating the test account")
+    t.Errorf("Error creating the test account", createError)
+    return
   }
 
   deleteError := DeleteServiceAccount(account.UniqueId)
 
   if deleteError != nil {
-    t.Errorf("Error deleting the test account")
+    t.Errorf("Error deleting the test account", deleteError)
+    return
   }
 }
