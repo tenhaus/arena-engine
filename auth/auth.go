@@ -16,7 +16,7 @@ import (
   "strings"
   "net/http"
   "golang.org/x/oauth2/google"
-  "net/url"
+  // "net/url"
   "io/ioutil"
   "google.golang.org/cloud/pubsub"
   "google.golang.org/cloud/datastore"
@@ -33,11 +33,13 @@ func CreateServiceAccount(encodedId string) (string, error) {
   context := context.Background()
 
   apiUrl := fmt.Sprintf("https://iam.googleapis.com/v1/projects/%s/serviceAccounts", cfg.ProjectId)
-  form := url.Values{}
-  form.Set("accountId", encodedId)
+  json := fmt.Sprintf(`{"accountId": "%s", "serviceAccount": {"displayName": "%s"}}`, encodedId, encodedId)
+
+  fmt.Println(json)
+  b := strings.NewReader(json)
 
   request, _ := http.NewRequest("POST",
-    apiUrl, strings.NewReader(form.Encode()))
+    apiUrl, b)
 
   client, err := google.DefaultClient(
     context, "https://www.googleapis.com/auth/cloud-platform")
