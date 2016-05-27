@@ -24,6 +24,7 @@ func OpenPit(routingChannel chan string) {
       cfg.RoutingTopic, 0, "")
 
     go subscribe(context, cfg.RoutingSubscription, routingChannel);
+    routingChannel <- "Bus Running"
 }
 
 func subscribe(context context.Context, subscription string,
