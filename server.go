@@ -3,28 +3,20 @@ package main
 import (
   "fmt"
   "time"
-  "github.com/tenhaus/botpit/bus"
+  "github.com/tenhaus/botpit/controller"
 )
 
 func main() {
-  routingChannel := make(chan string)
-  bus.OpenPit(routingChannel)
-
-  run(routingChannel)
-}
-
-func run(routingChannel chan string) {
+  controlChannel := make(chan string)
+  go controller.Start(controlChannel)
   timer := time.Tick(100 * time.Millisecond)
-  fmt.Println("Running");
 
+  // main loop
+  // Check for new game requests
+  // Check the status of existing games
+  // Create or close games if needed
   for range timer {
-    msg := <-routingChannel
+    msg := <-controlChannel
     fmt.Println(msg)
-
-    // Check for new game requests
-    // Check the status of existing games
-    // Create or close games if needed
-
-    // fmt.Println("0 Games 0 Players")
   }
 }
