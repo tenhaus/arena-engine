@@ -1,9 +1,20 @@
 # Botpit
 
+### DONE
+* Create user
+* Delete user
+* Create service account
+* Delete service account
+* Lib for creating pubsub topics
+* Config
+
 ### TODO
-* ~Currently writing the co~
-* Two
-* Three
+* Restrict service account permissions to only send/receive on topics
+* Pull token and send to client
+* Client
+* Deploy to compute engine (deployment works, but don't know how to start the service yet)
+* Rest route and function for /signup
+* More but it's time to go home
 
 ## Purpose
 
