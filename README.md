@@ -32,6 +32,8 @@ Botpit is a tournament framework for connecting and controlling player-written b
 
 The application uses Google Cloud Platform throughout. Players sign up by using the command line client, which posts credentials to the rest API hosted on either app engine or compute engine.
 
+The game itself can be anything. The botpit server will provide an api to the game. For example, a number guessing game will be provided with number of players and turn information. 
+
 ### When the player signs up
 * Botpit stores their username, encrypted pass, and email in Cloud Storage
 * It then creates a service account, which allows the player bot to join our pubsub topics for message routing.
