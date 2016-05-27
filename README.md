@@ -5,6 +5,7 @@ Right now everything runs off of my Google Cloud account, but could run off some
 Currently using iam api, pubsub, storage
 
 export BOTPIT_ENV="development"
+
 export GOOGLE_APPLICATION_CREDENTIALS="/Users/chris/Code/go/src/github.com/tenhaus/botpit/botpit-development-authentication.json"
 export BOTPIT_CONFIG="/Users/chris/Code/go/src/github.com/tenhaus/botpit/config.json"
 
@@ -13,7 +14,7 @@ export BOTPIT_CONFIG="/Users/chris/Code/go/src/github.com/tenhaus/botpit/config.
 * Delete user
 * Create service account
 * Delete service account
-* Lib for creating pubsub topics
+* Lib for creating pubsub topics and listening for messages
 * Config
 
 ### TODO
