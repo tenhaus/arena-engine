@@ -1,26 +1,16 @@
 package main
 
-import "fmt"
-import "time"
-// import "github.com/tenhaus/botpit/bus"
-import "github.com/tenhaus/botpit/accounts"
+import (
+  "fmt"
+  "time"
+  "github.com/tenhaus/botpit/bus"
+)
 
 func main() {
-  // routingChannel := make(chan string)
-  // bus.OpenPit(routingChannel)
-  var account accounts.ServiceAccount
-  testAccountName := "testeisadorkdasdfasdfsdffuhdddddbibcgrus"
-  createError := accounts.CreateServiceAccount(testAccountName, &account)
-  if createError == nil {
-    fmt.Println(account)
-    err := accounts.DeleteServiceAccount(account.UniqueId)
-    fmt.Println(err)
-  } else {
-    fmt.Println(createError)
-  }
+  routingChannel := make(chan string)
+  bus.OpenPit(routingChannel)
 
-
-  // run(routingChannel)
+  run(routingChannel)
 }
 
 func run(routingChannel chan string) {
