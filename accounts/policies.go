@@ -11,17 +11,6 @@ import (
   "google.golang.org/cloud/pubsub"
 )
 
-type Policy struct {
-  Version int
-  Bindings []PolicyBinding
-  Etag string
-}
-
-type PolicyBinding struct {
-  Role string
-  Members []string
-}
-
 func GetPolicyForTopic(topicName string, policy *Policy) error {
   cfg := config.GetConfig()
   context := context.Background()
@@ -41,10 +30,48 @@ func GetPolicyForTopic(topicName string, policy *Policy) error {
   if resp.StatusCode == 200 {
     contents, _ := ioutil.ReadAll(resp.Body)
     unmarshalError := json.Unmarshal(contents, policy)
-    fmt.Println(Policy(*policy))
 
     return unmarshalError
   }
 
   return nil
+}
+
+func AllowServiceAccountToSubscribeToTopic(topicName string, accountId string) error {
+  // cfg := config.GetConfig()
+  // context := context.Background()
+
+  // Get the policy
+  var policy Policy
+  err := GetPolicyForTopic(topicName, &policy)
+
+  if err != nil {
+    return err
+  }
+
+  // Add the account to the policy
+  // err = AddAccountToPolicy(accountId, &policy)
+
+  // if err != nil {
+    // return err
+  // }
+
+  // fmt.Println(Policy(policy))
+  // Commit the policy
+
+  return fmt.Errorf("wtf")
+}
+
+func AddAccountToPolicy(accountId string, role string, policy *Policy) {
+  if !policy.Bindings.contains(role) {
+    // TODO add the new binding with correct role and accountid
+    fmt.Println("Role not found")
+    return
+  }
+
+  for _, binding := range policy.Bindings {
+    if binding.Role == role && !binding.Members.contains(accountId) {
+      binding.Members = append(binding.Members, accountId)
+    }
+  }
 }

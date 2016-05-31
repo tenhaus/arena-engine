@@ -1,6 +1,9 @@
 package accounts
 
-import "testing"
+import (
+  "testing"
+  "github.com/tenhaus/botpit/config"
+)
 
 func TestCreateAndDeleteUserAccount(t *testing.T) {
   encodedId, createError := CreateUserAccount("NecroPorkBopper")
@@ -33,4 +36,28 @@ func TestCreateServiceAccount(t *testing.T) {
     t.Errorf("Error deleting the test account", deleteError)
     return
   }
+}
+
+func TestGetPolicy(t *testing.T) {
+  cfg := config.GetConfig()
+  var policy Policy
+  err := GetPolicyForTopic(cfg.RoutingTopic, &policy)
+
+  if err != nil {
+    t.Errorf("Error fetching a policy", err)
+  }
+}
+
+func TestAddAccountToPolicy(t *testing.T) {
+  cfg := config.GetConfig()
+  var policy Policy
+  GetPolicyForTopic(cfg.RoutingTopic, &policy)
+
+  accountId := "test@test.com"
+  role := "roles/pubsub.subscriber"
+  AddAccountToPolicy(accountId, role, &policy)
+
+  // if err != nil {
+  //   t.Errorf("Could not add the account to the role", err)
+  // }
 }
