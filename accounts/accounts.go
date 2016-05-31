@@ -68,8 +68,6 @@ func CreateServiceAccount(handle string, account *ServiceAccount) error {
     return err
   }
 
-  fmt.Println(resp.StatusCode)
-  // Parse the status
   if(resp.StatusCode == 409) {
     return fmt.Errorf("Name already exists")
   }
