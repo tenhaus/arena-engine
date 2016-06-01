@@ -56,8 +56,5 @@ func TestAddAccountToPolicy(t *testing.T) {
   accountId := "test@test.com"
   role := "roles/pubsub.subscriber"
   AddAccountToPolicy(accountId, role, &policy)
-
-  // if err != nil {
-  //   t.Errorf("Could not add the account to the role", err)
-  // }
+  t.Logf("%v", policy)
 }
