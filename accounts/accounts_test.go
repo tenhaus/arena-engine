@@ -80,5 +80,5 @@ func TestAddAccountToPolicyWithoutExistingRole(t *testing.T) {
 
 func TestGrantSubscribe(t *testing.T) {
   cfg := config.GetConfig()
-  GrantSubscribe(cfg.RoutingTopic, "test@test.com")
+  GrantSubscribe(cfg.RoutingTopic, "testesttest@botpit-1134.iam.gserviceaccount.com")
 }

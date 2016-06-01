@@ -71,12 +71,15 @@ func GrantSubscribe(topicName string, accountId string) error {
   urlTemplate := "https://pubsub.googleapis.com/v1/projects/%s/topics/%s:setIamPolicy"
   apiUrl := fmt.Sprintf(urlTemplate, cfg.ProjectId, topicName)
 
-  data, _ := json.Marshal(policy)
-  b := strings.NewReader(string(data))
+  policyWrapper := PolicyWrapper{Policy: policy}
+  postData, _ := json.Marshal(policyWrapper)
+  b := strings.NewReader(string(postData))
 
   request, _ := http.NewRequest("POST", apiUrl, b)
   client, _ := google.DefaultClient(context, pubsub.ScopePubSub)
   resp, err := client.Do(request)
+
+  fmt.Println(string(postData))
 
   if err != nil {
     return err

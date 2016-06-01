@@ -2,17 +2,21 @@ package accounts
 
 import "fmt"
 
+type PolicyWrapper struct {
+  Policy Policy `json:"policy"`
+}
+
 type Policy struct {
-  Version int
-  Bindings PolicyBindings
-  Etag string
+  Version int `json:"version"`
+  Bindings PolicyBindings `json:"bindings"`
+  Etag string `json:"etag"`
 }
 
 type PolicyBindings []PolicyBinding
 
 type PolicyBinding struct {
-  Role string
-  Members PolicyMembers
+  Role string `json:"role"`
+  Members PolicyMembers `json:"members"`
 }
 
 type PolicyMembers []string

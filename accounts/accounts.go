@@ -54,8 +54,7 @@ func CreateServiceAccount(handle string, account *ServiceAccount) error {
   apiUrl := fmt.Sprintf("https://iam.googleapis.com/v1/projects/%s/serviceAccounts", cfg.ProjectId)
   jsonParameters := fmt.Sprintf(`{"accountId": "%s", "serviceAccount": {"displayName": "%s"}}`, handle, handle)
   b := strings.NewReader(jsonParameters)
-  fmt.Println(apiUrl)
-  fmt.Println(jsonParameters)
+  
   // Run the request
   request, _ := http.NewRequest("POST", apiUrl, b)
 
