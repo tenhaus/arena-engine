@@ -77,3 +77,8 @@ func TestAddAccountToPolicyWithoutExistingRole(t *testing.T) {
     t.Errorf("Failed to add a member")
   }
 }
+
+func TestGrantSubscribe(t *testing.T) {
+  cfg := config.GetConfig()
+  GrantSubscribe(cfg.RoutingTopic, "test@test.com")
+}

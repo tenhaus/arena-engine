@@ -2,6 +2,7 @@ package accounts
 
 import (
   "fmt"
+  "strings"
   "net/http"
   "io/ioutil"
   "encoding/json"
@@ -10,6 +11,8 @@ import (
   "golang.org/x/net/context"
   "google.golang.org/cloud/pubsub"
 )
+
+const SUBSCRIBE_ROLE =  "roles/pubsub.subscriber"
 
 func GetPolicyForTopic(topicName string, policy *Policy) error {
   cfg := config.GetConfig()
@@ -37,9 +40,21 @@ func GetPolicyForTopic(topicName string, policy *Policy) error {
   return nil
 }
 
-func AllowServiceAccountToSubscribeToTopic(topicName string, accountId string) error {
-  // cfg := config.GetConfig()
-  // context := context.Background()
+func RevokePublish(topicName string, accountId string) error {
+  return nil
+}
+
+func GrantPublish(topicName string, accountId string) error {
+  return nil
+}
+
+func RevokeSubscribe(topicName string, accountId string) error {
+  return nil
+}
+
+func GrantSubscribe(topicName string, accountId string) error {
+  cfg := config.GetConfig()
+  context := context.Background()
 
   // Get the policy
   var policy Policy
@@ -49,16 +64,27 @@ func AllowServiceAccountToSubscribeToTopic(topicName string, accountId string) e
     return err
   }
 
-  // Add the account to the policy
-  // err = AddAccountToPolicy(accountId, &policy)
+  // Add the account to the policy object
+  AddAccountToPolicy(accountId, SUBSCRIBE_ROLE, &policy)
 
-  // if err != nil {
-    // return err
-  // }
-
-  // fmt.Println(Policy(policy))
   // Commit the policy
+  urlTemplate := "https://pubsub.googleapis.com/v1/projects/%s/topics/%s:setIamPolicy"
+  apiUrl := fmt.Sprintf(urlTemplate, cfg.ProjectId, topicName)
 
+  data, _ := json.Marshal(policy)
+  b := strings.NewReader(string(data))
+
+  request, _ := http.NewRequest("POST", apiUrl, b)
+  client, _ := google.DefaultClient(context, pubsub.ScopePubSub)
+  resp, err := client.Do(request)
+
+  if err != nil {
+    return err
+  }
+
+  fmt.Println(resp.StatusCode)
+  body, _ := ioutil.ReadAll(resp.Body)
+  fmt.Println(string(body))
   return fmt.Errorf("wtf")
 }
 
