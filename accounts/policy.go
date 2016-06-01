@@ -16,6 +16,7 @@ type PolicyBinding struct {
 }
 
 type PolicyMembers []string
+type PolicyMember string
 
 func (bindings PolicyBindings) contains(role string) bool {
   for _, binding := range bindings {
@@ -29,11 +30,15 @@ func (bindings PolicyBindings) contains(role string) bool {
 
 func (members PolicyMembers) contains(member string) bool {
   for _, existingMember := range members {
-    saMember := fmt.Sprintf("serviceAccount:%s", member)
+    saMember := getServiceAccountString(member)
     if saMember == existingMember {
       return true
     }
   }
 
   return false
+}
+
+func getServiceAccountString(accountId string) string {
+  return fmt.Sprintf("serviceAccount:%s", accountId)
 }

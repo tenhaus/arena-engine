@@ -2,6 +2,7 @@ package accounts
 
 import (
   "testing"
+  "strings"
   "github.com/tenhaus/botpit/config"
 )
 
@@ -48,13 +49,31 @@ func TestGetPolicy(t *testing.T) {
   }
 }
 
-func TestAddAccountToPolicy(t *testing.T) {
-  cfg := config.GetConfig()
-  var policy Policy
-  GetPolicyForTopic(cfg.RoutingTopic, &policy)
+func TestAddAccountToPolicyWithExistingRole(t *testing.T) {
+  binding := PolicyBinding{Role: "roles/pubsub.subscriber"}
+  bindings := PolicyBindings{binding}
+  policy := Policy{Bindings: bindings}
 
   accountId := "test@test.com"
   role := "roles/pubsub.subscriber"
   AddAccountToPolicy(accountId, role, &policy)
-  t.Logf("%v", policy)
+
+  member := policy.Bindings[0].Members[0]
+  if !strings.Contains(member, accountId) {
+    t.Errorf("Failed to add a member")
+  }
+}
+
+func TestAddAccountToPolicyWithoutExistingRole(t *testing.T) {
+  bindings := PolicyBindings{}
+  policy := Policy{Bindings: bindings}
+
+  accountId := "test@test.com"
+  role := "roles/pubsub.subscriber"
+  AddAccountToPolicy(accountId, role, &policy)
+
+  member := policy.Bindings[0].Members[0]
+  if !strings.Contains(member, accountId) {
+    t.Errorf("Failed to add a member")
+  }
 }

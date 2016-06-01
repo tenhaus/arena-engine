@@ -64,18 +64,22 @@ func AllowServiceAccountToSubscribeToTopic(topicName string, accountId string) e
 
 func AddAccountToPolicy(accountId string, role string, policy *Policy) {
   // If we don't already have the role, we have to add it
-  if !policy.Bindings.contains(role) {
-    binding := PolicyBinding{Role: role}
-    policy.Bindings = append(policy.Bindings, binding)
-  }
+  AddRoleToPolicy(role, policy)
 
   // We know we have the role so add the account to it
   for i, binding := range policy.Bindings {
     if binding.Role == role && !binding.Members.contains(accountId) {
-      s := append(binding.Members, accountId)
-      binding.Members = s
+      saAccountId := getServiceAccountString(accountId)
+      binding.Members = append(binding.Members, saAccountId)
     }
 
     policy.Bindings[i] = binding
+  }
+}
+
+func AddRoleToPolicy(role string, policy *Policy) {
+  if !policy.Bindings.contains(role) {
+    binding := PolicyBinding{Role: role}
+    policy.Bindings = append(policy.Bindings, binding)
   }
 }
