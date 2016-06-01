@@ -79,8 +79,6 @@ func GrantSubscribe(topicName string, accountId string) error {
   client, _ := google.DefaultClient(context, pubsub.ScopePubSub)
   resp, err := client.Do(request)
 
-  fmt.Println(string(postData))
-
   if err != nil {
     return err
   }
