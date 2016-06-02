@@ -13,6 +13,7 @@ import (
 )
 
 const SUBSCRIBE_ROLE =  "roles/pubsub.subscriber"
+const PUBLISH_ROLE =  "roles/pubsub.publisher"
 
 func GetPolicyForTopic(topicName string, policy *Policy) error {
   cfg := config.GetConfig()
@@ -40,19 +41,23 @@ func GetPolicyForTopic(topicName string, policy *Policy) error {
   return nil
 }
 
+func GrantPublish(topicName string, accountId string) error {
+  return grantRole(topicName, accountId, PUBLISH_ROLE);
+}
+
 func RevokePublish(topicName string, accountId string) error {
   return nil
 }
 
-func GrantPublish(topicName string, accountId string) error {
-  return nil
+func GrantSubscribe(topicName string, accountId string) error {
+  return grantRole(topicName, accountId, SUBSCRIBE_ROLE);
 }
 
 func RevokeSubscribe(topicName string, accountId string) error {
   return nil
 }
 
-func GrantSubscribe(topicName string, accountId string) error {
+func grantRole(topicName string, accountId string, role string) error {
   cfg := config.GetConfig()
   context := context.Background()
 
@@ -65,7 +70,7 @@ func GrantSubscribe(topicName string, accountId string) error {
   }
 
   // Add the account to the policy object
-  AddAccountToPolicy(accountId, SUBSCRIBE_ROLE, &policy)
+  AddAccountToPolicy(accountId, role, &policy)
 
   // Commit the policy
   urlTemplate := "https://pubsub.googleapis.com/v1/projects/%s/topics/%s:setIamPolicy"

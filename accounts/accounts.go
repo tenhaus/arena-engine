@@ -1,14 +1,5 @@
 // Manages users and permissions
 
-// So I think we want to:
-//
-// Create a uuid for a user (probably pull it from a db)
-// Create a service account with the uuid
-// Create a topic with the uuid
-// Somehow retrieve some token the user can use to authenticate
-// Send the token back
-
-
 package accounts
 
 import (
