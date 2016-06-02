@@ -1,6 +1,7 @@
 package accounts
 
 import (
+  "fmt"
   "testing"
   "strings"
   "github.com/tenhaus/botpit/config"
@@ -81,10 +82,12 @@ func TestAddAccountToPolicyWithoutExistingRole(t *testing.T) {
 func TestGrantSubscribe(t *testing.T) {
   cfg := config.GetConfig()
   handle := "testytesterson1134"
-  accountId := "testytesterson1134@botpit-1134.iam.gserviceaccount.com"
+  accountId := fmt.Sprintf("%s@%s.iam.gserviceaccount.com",
+    handle, cfg.ProjectId)
+
+  var serviceAccount ServiceAccount;
 
   // Create a service account
-  var serviceAccount ServiceAccount;
   if err := CreateServiceAccount(handle, &serviceAccount); err != nil {
     t.Error(err)
   }
