@@ -1,4 +1,4 @@
-package accounts
+package serviceaccounts
 
 type ServiceAccount struct {
   Name string

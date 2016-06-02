@@ -1,4 +1,4 @@
-package accounts
+package serviceaccounts
 
 import (
   "testing"
