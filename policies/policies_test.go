@@ -16,14 +16,14 @@ var serviceAccount serviceaccounts.ServiceAccount
 func setup() error {
   cfg = config.GetConfig()
   serviceAccountHandle = "testytesterson1134"
-  return serviceaccounts.CreateServiceAccount(serviceAccountHandle, &serviceAccount)
+  return serviceaccounts.Create(serviceAccountHandle, &serviceAccount)
 }
 
 // Delete the service account
 // The permissions we add to topics are automatically removed when
 // the account is deleted, so we're not cleaning them up in teardown
 func teardown() error {
-  return serviceaccounts.DeleteServiceAccount(serviceAccount.UniqueId)
+  return serviceaccounts.Delete(serviceAccount.UniqueId)
 }
 
 

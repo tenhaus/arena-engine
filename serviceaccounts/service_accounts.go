@@ -11,7 +11,7 @@ import (
   "github.com/tenhaus/botpit/config"
 )
 
-func CreateServiceAccount(handle string, account *ServiceAccount) error {
+func Create(handle string, account *ServiceAccount) error {
   handleLength := len(handle)
 
   if handleLength < 6 || handleLength > 30 {
@@ -55,7 +55,7 @@ func CreateServiceAccount(handle string, account *ServiceAccount) error {
   return fmt.Errorf("Unknown error while creating the account. Sorry.")
 }
 
-func DeleteServiceAccount(accountId string) error {
+func Delete(accountId string) error {
   cfg := config.GetConfig()
   context := context.Background()
 

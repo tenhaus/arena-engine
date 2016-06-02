@@ -15,7 +15,7 @@ type UserAccount struct {
   Password string
 }
 
-func CreateUserAccount(handle string, account *UserAccount) error {
+func Create(handle string, account *UserAccount) error {
   handleLength := len(handle)
 
   if handleLength < 6 || handleLength > 30 {
@@ -36,7 +36,7 @@ func CreateUserAccount(handle string, account *UserAccount) error {
   return nil
 }
 
-func DeleteUserAccount(encodedId string) error {
+func Delete(encodedId string) error {
   cfg := config.GetConfig()
   context, _ := config.GetContext()
   client, clientErr := datastore.NewClient(context, cfg.ProjectId)

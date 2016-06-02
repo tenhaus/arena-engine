@@ -7,11 +7,11 @@ import (
 func TestCreateDeleteUserAccount(t *testing.T) {
   var account UserAccount
 
-  if err := CreateUserAccount("TestyTesterson1134", &account); err != nil {
+  if err := Create("TestyTesterson1134", &account); err != nil {
     t.Error(err)
   }
 
-  if err := DeleteUserAccount(account.Key); err != nil {
+  if err := Delete(account.Key); err != nil {
     t.Error(err)
   }
 }
