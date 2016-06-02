@@ -3,10 +3,9 @@
 package accounts
 
 import (
-  "fmt"  
-  "google.golang.org/cloud/pubsub"
+  "fmt"
   "google.golang.org/cloud/datastore"
-  "golang.org/x/net/context"
+  // "golang.org/x/net/context"
   "github.com/tenhaus/botpit/config"
 )
 
@@ -14,10 +13,6 @@ type Fighter struct {
   Handle string
   Email string
   Password string
-}
-
-func CreateTopic(context context.Context, uuid string) {
-  pubsub.CreateTopic(context, uuid)
 }
 
 func CreateUserAccount(handle string) (string, error) {
