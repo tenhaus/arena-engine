@@ -29,13 +29,15 @@ func teardown() error {
 
 func TestMain(m *testing.M) {
   if err := setup(); err != nil {
-    fmt.Errorf("Could not create service account in setup", err)
+    fmt.Println("Could not create service account in setup", err)
+    os.Exit(1)
   }
 
   code := m.Run()
 
   if err := teardown(); err != nil {
-    fmt.Errorf("Could not delete service account in teardown", err)
+    fmt.Println("Could not delete service account in teardown", err)
+    os.Exit(1)
   }
 
 	os.Exit(code)
