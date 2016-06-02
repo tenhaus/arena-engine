@@ -1,19 +1,18 @@
 package accounts
 
 import (
+  "fmt"
   "testing"
 )
 
-func TestCreateAndDeleteUserAccount(t *testing.T) {
-  encodedId, createError := CreateUserAccount("NecroPorkBopper")
+func TestCreateDeleteUserAccount(t *testing.T) {
+  var account UserAccount
 
-  if createError != nil || encodedId == "" {
-    t.Errorf("Couldn't create the account", createError)
+  if err := CreateUserAccount("TestyTesterson1134", &account); err != nil {
+    t.Error(err)
   }
 
-  deleteError := DeleteUserAccount(encodedId)
-
-  if deleteError != nil {
-    t.Errorf("Couldn't delete the account", deleteError)
+  if err := DeleteUserAccount(account.Key); err != nil {
+    t.Error(err)
   }
 }

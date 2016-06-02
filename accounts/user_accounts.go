@@ -1,40 +1,39 @@
-// Manages users and permissions
-
 package accounts
 
 import (
   "fmt"
   "google.golang.org/cloud/datastore"
-  // "golang.org/x/net/context"
   "github.com/tenhaus/botpit/config"
 )
 
-type Fighter struct {
+const USER_ACCOUNT_KIND = "Fighter"
+
+type UserAccount struct {
+  Key string
   Handle string
   Email string
   Password string
 }
 
-func CreateUserAccount(handle string) (string, error) {
+func CreateUserAccount(handle string, account *UserAccount) error {
   handleLength := len(handle)
 
   if handleLength < 6 || handleLength > 30 {
-    return "", fmt.Errorf("Handle must be between 6 and 30 characters")
+    return fmt.Errorf("Handle must be between 6 and 30 characters")
   }
 
   client, context := config.GetClientWithContext()
 
-  k := datastore.NewKey(context, "Fighter", "", 0, nil)
-  e := new(Fighter)
-  e.Handle = handle
+  k := datastore.NewKey(context, USER_ACCOUNT_KIND, "", 0, nil)
+  account.Handle = handle
 
-  key, putError := client.Put(context, k, e)
-
-  if putError != nil {
-    return "", putError
+  if key, err := client.Put(context, k, account); err != nil {
+    return err
+  } else {
+    account.Key = key.Encode()
   }
 
-  return key.Encode(), nil
+  return nil
 }
 
 func DeleteUserAccount(encodedId string) error {
