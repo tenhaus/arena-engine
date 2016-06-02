@@ -4,7 +4,7 @@ import (
   "testing"
 )
 
-func TestCreateServiceAccount(t *testing.T) {
+func TestCreateDeleteServiceAccount(t *testing.T) {
   var account ServiceAccount
   serviceAccountHandle = "createserviceaccounttest"
 
