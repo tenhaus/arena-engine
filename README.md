@@ -17,14 +17,14 @@ export BOTPIT_CONFIG="/Users/chris/Code/go/src/github.com/tenhaus/botpit/config.
 * Delete service account
 * Lib for creating pubsub topics and listening for messages
 * Config
+* Restrict service account permissions to only send/receive on topics
 
 ### TODO
-* Restrict service account permissions to only send/receive on topics
 * Pull token and send to client
 * Client
 * Deploy to compute engine (deployment works, but don't know how to start the service yet)
 * Rest route and function for /signup
-* More but it's time to go home
+* More 
 
 ## Purpose
 
@@ -32,7 +32,7 @@ Botpit is a tournament framework for connecting and controlling player-written b
 
 The application uses Google Cloud Platform throughout. Players sign up by using the command line client, which posts credentials to the rest API hosted on either app engine or compute engine.
 
-The game itself can be anything. The botpit server will provide an api to the game. For example, a number guessing game will be provided with number of players and turn information. 
+The game itself can be anything. The botpit server will provide an api to the game. For example, a number guessing game will be provided with number of players and turn information.
 
 ### When the player signs up
 * Botpit stores their username, encrypted pass, and email in Cloud Storage
