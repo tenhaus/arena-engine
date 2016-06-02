@@ -9,20 +9,20 @@ import (
 )
 
 var cfg config.EnvironmentConfiguration
-var testServiceAccountHandle string
-var testServiceAccount ServiceAccount
+var serviceAccountHandle string
+var serviceAccount ServiceAccount
 
 func setup() error {
   cfg = config.GetConfig()
-  testServiceAccountHandle = "testytesterson1134"
-  return CreateServiceAccount(testServiceAccountHandle, &testServiceAccount)
+  serviceAccountHandle = "testytesterson1134"
+  return CreateServiceAccount(serviceAccountHandle, &serviceAccount)
 }
 
 // Delete the service account
 // The permissions we add to topics are automatically removed when
 // the account is deleted, so we're not cleaning them up in teardown
 func teardown() error {
-  return DeleteServiceAccount(testServiceAccount.UniqueId)
+  return DeleteServiceAccount(serviceAccount.UniqueId)
 }
 
 
@@ -61,10 +61,10 @@ func TestAddAccountToPolicyWithExistingRole(t *testing.T) {
   bindings := PolicyBindings{binding}
   policy := Policy{Bindings: bindings}
 
-  AddAccountToPolicy(testServiceAccount.Email, SUBSCRIBE_ROLE, &policy)
+  AddAccountToPolicy(serviceAccount.Email, SUBSCRIBE_ROLE, &policy)
 
   member := policy.Bindings[0].Members[0]
-  if !strings.Contains(member, testServiceAccount.Email) {
+  if !strings.Contains(member, serviceAccount.Email) {
     t.Errorf("Failed to add a member")
   }
 }
@@ -74,24 +74,24 @@ func TestAddAccountToPolicyWithoutExistingRole(t *testing.T) {
   bindings := PolicyBindings{}
   policy := Policy{Bindings: bindings}
 
-  AddAccountToPolicy(testServiceAccount.Email, SUBSCRIBE_ROLE, &policy)
+  AddAccountToPolicy(serviceAccount.Email, SUBSCRIBE_ROLE, &policy)
 
   member := policy.Bindings[0].Members[0]
-  if !strings.Contains(member, testServiceAccount.Email) {
+  if !strings.Contains(member, serviceAccount.Email) {
     t.Errorf("Failed to add a member")
   }
 }
 
 // Grant permissions to subscribe to a topic
 func TestGrantSubscribe(t *testing.T) {
-  if err := GrantSubscribe(cfg.RoutingTopic, testServiceAccount.Email); err != nil {
+  if err := GrantSubscribe(cfg.RoutingTopic, serviceAccount.Email); err != nil {
     t.Error(err)
   }
 }
 
 // Grant permissions to publish to a topic
 func TestGrantPublish(t *testing.T) {
-  if err := GrantPublish(cfg.RoutingTopic, testServiceAccount.Email); err != nil {
+  if err := GrantPublish(cfg.RoutingTopic, serviceAccount.Email); err != nil {
     t.Error(err)
   }
 }
