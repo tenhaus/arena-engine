@@ -61,8 +61,7 @@ func TestAddAccountToPolicyWithExistingRole(t *testing.T) {
   bindings := PolicyBindings{binding}
   policy := Policy{Bindings: bindings}
 
-  role := SUBSCRIBE_ROLE
-  AddAccountToPolicy(testServiceAccount.Email, role, &policy)
+  AddAccountToPolicy(testServiceAccount.Email, SUBSCRIBE_ROLE, &policy)
 
   member := policy.Bindings[0].Members[0]
   if !strings.Contains(member, testServiceAccount.Email) {
@@ -75,8 +74,7 @@ func TestAddAccountToPolicyWithoutExistingRole(t *testing.T) {
   bindings := PolicyBindings{}
   policy := Policy{Bindings: bindings}
 
-  role := SUBSCRIBE_ROLE
-  AddAccountToPolicy(testServiceAccount.Email, role, &policy)
+  AddAccountToPolicy(testServiceAccount.Email, SUBSCRIBE_ROLE, &policy)
 
   member := policy.Bindings[0].Members[0]
   if !strings.Contains(member, testServiceAccount.Email) {

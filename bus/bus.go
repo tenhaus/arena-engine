@@ -1,12 +1,14 @@
 // Handle communication between clients and the pit
 package bus
 
-import "os"
-import "fmt"
-import "log"
-import "golang.org/x/net/context"
-import "google.golang.org/cloud/pubsub"
-import "github.com/tenhaus/botpit/config"
+import (
+  "os"
+  "fmt"
+  "log"
+  "golang.org/x/net/context"
+  "google.golang.org/cloud/pubsub"
+  "github.com/tenhaus/botpit/config"
+)
 
 func OpenPit(routingChannel chan string) {
     cfg := config.GetConfig()
