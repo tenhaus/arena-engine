@@ -1,9 +1,7 @@
 package accounts
 
 import (
-  "fmt"
   "testing"
-  "github.com/tenhaus/botpit/config"
 )
 
 func TestCreateAndDeleteUserAccount(t *testing.T) {
