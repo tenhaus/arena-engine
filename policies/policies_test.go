@@ -1,4 +1,4 @@
-package accounts
+package policies
 
 import (
   "os"
@@ -6,23 +6,24 @@ import (
   "strings"
   "testing"
   "github.com/tenhaus/botpit/config"
+  "github.com/tenhaus/botpit/accounts"
 )
 
 var cfg config.EnvironmentConfiguration
 var serviceAccountHandle string
-var serviceAccount ServiceAccount
+var serviceAccount accounts.ServiceAccount
 
 func setup() error {
   cfg = config.GetConfig()
   serviceAccountHandle = "testytesterson1134"
-  return CreateServiceAccount(serviceAccountHandle, &serviceAccount)
+  return accounts.CreateServiceAccount(serviceAccountHandle, &serviceAccount)
 }
 
 // Delete the service account
 // The permissions we add to topics are automatically removed when
 // the account is deleted, so we're not cleaning them up in teardown
 func teardown() error {
-  return DeleteServiceAccount(serviceAccount.UniqueId)
+  return accounts.DeleteServiceAccount(serviceAccount.UniqueId)
 }
 
 

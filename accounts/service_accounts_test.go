@@ -6,7 +6,7 @@ import (
 
 func TestCreateDeleteServiceAccount(t *testing.T) {
   var account ServiceAccount
-  serviceAccountHandle = "createserviceaccounttest"
+  serviceAccountHandle := "createserviceaccounttest"
 
   createError := CreateServiceAccount(serviceAccountHandle, &account)
 

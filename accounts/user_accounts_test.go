@@ -1,7 +1,6 @@
 package accounts
 
 import (
-  "fmt"
   "testing"
 )
 
