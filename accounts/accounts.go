@@ -54,7 +54,7 @@ func CreateServiceAccount(handle string, account *ServiceAccount) error {
   apiUrl := fmt.Sprintf("https://iam.googleapis.com/v1/projects/%s/serviceAccounts", cfg.ProjectId)
   jsonParameters := fmt.Sprintf(`{"accountId": "%s", "serviceAccount": {"displayName": "%s"}}`, handle, handle)
   b := strings.NewReader(jsonParameters)
-  
+
   // Run the request
   request, _ := http.NewRequest("POST", apiUrl, b)
 
@@ -84,14 +84,14 @@ func CreateServiceAccount(handle string, account *ServiceAccount) error {
   return fmt.Errorf("Unknown error while creating the account. Sorry.")
 }
 
-func DeleteServiceAccount(encodedId string) error {
+func DeleteServiceAccount(accountId string) error {
   cfg := config.GetConfig()
   context := context.Background()
 
 
   // Build the url and parameters
   urlTemplate := "https://iam.googleapis.com/v1/projects/%s/serviceAccounts/%s"
-  apiUrl := fmt.Sprintf(urlTemplate, cfg.ProjectId, encodedId)
+  apiUrl := fmt.Sprintf(urlTemplate, cfg.ProjectId, accountId)
 
   // Run the request
   request, _ := http.NewRequest("DELETE", apiUrl, nil)
@@ -105,10 +105,12 @@ func DeleteServiceAccount(encodedId string) error {
     return err
   }
 
-  fmt.Println(resp.StatusCode)
-  contents, _ := ioutil.ReadAll(resp.Body)
-  fmt.Println(string(contents))
-  return nil
+  // Yay
+  if resp.StatusCode == 200 {
+    return nil;
+  }
+
+  return err
 }
 
 func CreateTopic(context context.Context, uuid string) {

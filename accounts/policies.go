@@ -83,10 +83,12 @@ func GrantSubscribe(topicName string, accountId string) error {
     return err
   }
 
-  fmt.Println(resp.StatusCode)
-  body, _ := ioutil.ReadAll(resp.Body)
-  fmt.Println(string(body))
-  return fmt.Errorf("wtf")
+  // Yay
+  if resp.StatusCode == 200 {
+    return nil;
+  }
+
+  return fmt.Errorf("Couldn't do it. Handle this error.", err)
 }
 
 func AddAccountToPolicy(accountId string, role string, policy *Policy) {
