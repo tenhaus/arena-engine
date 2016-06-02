@@ -80,30 +80,22 @@ func TestAddAccountToPolicyWithoutExistingRole(t *testing.T) {
 
 func TestGrantSubscribe(t *testing.T) {
   cfg := config.GetConfig()
-
-  // Create a service account
-  var serviceAccount ServiceAccount;
   handle := "testytesterson1134"
   accountId := "testytesterson1134@botpit-1134.iam.gserviceaccount.com"
 
-  err := CreateServiceAccount(handle, &serviceAccount)
-
-  if err != nil {
+  // Create a service account
+  var serviceAccount ServiceAccount;
+  if err := CreateServiceAccount(handle, &serviceAccount); err != nil {
     t.Error(err)
   }
 
   // Grant subscribe to the service account
-  err = GrantSubscribe(cfg.RoutingTopic, accountId)
-
-  if err != nil {
+  if err := GrantSubscribe(cfg.RoutingTopic, accountId); err != nil {
     t.Error(err)
   }
 
   // Delete the service account
-  err = DeleteServiceAccount(accountId)
-
-  if err != nil {
+  if err := DeleteServiceAccount(accountId); err != nil {
     t.Error(err)
   }
-
 }
