@@ -13,6 +13,7 @@ type UserAccount struct {
   Handle string
   Email string
   Password string
+  RoutingTopic string
 }
 
 func Create(handle string, account *UserAccount) error {
