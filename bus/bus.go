@@ -10,6 +10,19 @@ import (
   "github.com/tenhaus/botpit/config"
 )
 
+func CreateRoutingTopicForHandle(handle string) (string, error) {
+  context, _ := config.GetContext()
+  topic := fmt.Sprintf("%s-routing", handle)
+
+  err := pubsub.CreateTopic(context, topic)
+  return topic, err
+}
+
+func DeleteTopic(topic string) error {
+  context, _ := config.GetContext()
+  return pubsub.DeleteTopic(context, topic)
+}
+
 func OpenPit(routingChannel chan string) {
     cfg := config.GetConfig()
     context, err := config.GetContext()
