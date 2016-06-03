@@ -4,6 +4,7 @@ import (
   "testing"
 )
 
+// Test create user, then cleanup
 func TestCreateDeleteUserAccount(t *testing.T) {
   var account UserAccount
 
