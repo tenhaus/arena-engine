@@ -18,7 +18,8 @@ func Signup(handle string, email string, password string,
   serviceAccount *serviceaccounts.ServiceAccount) error {
 
   // Create the user account
-  if err := useraccounts.Create(handle, userAccount); err != nil {
+  if err := useraccounts.Create(handle, email,
+    password, userAccount); err != nil {
     return fmt.Errorf("Error creating the user account %v", err)
   }
 

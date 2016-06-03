@@ -16,7 +16,9 @@ type UserAccount struct {
   RoutingTopic string
 }
 
-func Create(handle string, account *UserAccount) error {
+func Create(handle string, email string,
+  password string, account *UserAccount) error {
+  // Test handle length
   handleLength := len(handle)
 
   if handleLength < 6 || handleLength > 30 {
@@ -27,6 +29,8 @@ func Create(handle string, account *UserAccount) error {
 
   k := datastore.NewKey(context, USER_ACCOUNT_KIND, "", 0, nil)
   account.Handle = handle
+  account.Email = email
+  account.Password = password
 
   if key, err := client.Put(context, k, account); err != nil {
     return err

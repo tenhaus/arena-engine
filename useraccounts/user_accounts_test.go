@@ -7,7 +7,7 @@ import (
 func TestCreateDeleteUserAccount(t *testing.T) {
   var account UserAccount
 
-  if err := Create("TestyTesterson1134", &account); err != nil {
+  if err := Create("TestyTesterson1134", "t@t.com", "pass", &account); err != nil {
     t.Error(err)
   }
 
