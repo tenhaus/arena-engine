@@ -13,7 +13,6 @@ import (
 // Get the key √
 // Create the game routing topic √
 // Set permissions √
-// Return the key √
 func Signup(handle string, email string, password string,
   userAccount *useraccounts.UserAccount,
   serviceAccount *serviceaccounts.ServiceAccount) error {
@@ -68,7 +67,7 @@ func KillUser(userAccount useraccounts.UserAccount,
     return err
   }
 
-  // Delete the topic
+  // Delete the user's routing topic
   if err := bus.DeleteTopic(userAccount.RoutingTopic); err != nil {
     return err
   }
