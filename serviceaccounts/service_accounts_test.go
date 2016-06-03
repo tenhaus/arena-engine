@@ -33,3 +33,21 @@ func TestRejectShortName(t *testing.T) {
 func TestRejectLongName(t *testing.T) {
   t.Error()
 }
+
+// Create a key for the account
+func TestCreateKey(t *testing.T) {
+  var serviceAccount ServiceAccount
+  serviceAccountHandle := "createserviceaccounttest"
+
+  if err := Create(serviceAccountHandle, &serviceAccount); err != nil {
+    t.Error(err)
+  }
+
+  if err:= CreateKey(&serviceAccount); err != nil {
+    t.Error(err)
+  }
+
+  if err := Delete(serviceAccount.Email); err != nil {
+    t.Error(err)
+  }
+}

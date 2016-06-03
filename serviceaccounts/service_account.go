@@ -8,4 +8,5 @@ type ServiceAccount struct {
   DisplayName string
   Etag string
   Oauth2ClientId string
+  Key ServiceAccountKey
 }

@@ -59,7 +59,6 @@ func Delete(accountId string) error {
   cfg := config.GetConfig()
   context := context.Background()
 
-
   // Build the url and parameters
   urlTemplate := "https://iam.googleapis.com/v1/projects/%s/serviceAccounts/%s"
   apiUrl := fmt.Sprintf(urlTemplate, cfg.ProjectId, accountId)
@@ -82,4 +81,37 @@ func Delete(accountId string) error {
   }
 
   return err
+}
+
+func CreateKey(serviceAccount *ServiceAccount) error {
+  cfg := config.GetConfig()
+  context := context.Background()
+
+  // Build the url and parameters
+  urlTemplate := "https://iam.googleapis.com/v1/projects/%s/serviceAccounts/%s/keys"
+  apiUrl := fmt.Sprintf(urlTemplate, cfg.ProjectId, serviceAccount.UniqueId)
+  jsonParameters := fmt.Sprintf(`{"privateKeyType": "TYPE_GOOGLE_CREDENTIALS_FILE"}`)
+  b := strings.NewReader(jsonParameters)
+
+  // Run the request
+  request, _ := http.NewRequest("POST", apiUrl, b)
+
+  client, _ := google.DefaultClient(
+    context, "https://www.googleapis.com/auth/cloud-platform")
+
+  resp, err := client.Do(request)
+
+  if err != nil {
+    return err
+  }
+
+  contents, _ := ioutil.ReadAll(resp.Body)
+  if(resp.StatusCode == 200) {
+    jsonError := json.Unmarshal(contents, &serviceAccount.Key)
+    return jsonError
+  } else {
+    return fmt.Errorf("Handle this %s", string(contents))
+  }
+
+  return nil
 }
