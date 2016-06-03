@@ -1,4 +1,4 @@
-package serviceaccounts
+package bot
 
 import (
   "testing"

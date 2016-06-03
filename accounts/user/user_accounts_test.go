@@ -1,4 +1,4 @@
-package useraccounts
+package user
 
 import (
   "testing"

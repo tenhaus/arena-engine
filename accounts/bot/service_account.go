@@ -1,4 +1,4 @@
-package serviceaccounts
+package bot
 
 type ServiceAccount struct {
   Name string
