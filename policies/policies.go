@@ -2,14 +2,10 @@ package policies
 
 import (
   "fmt"
-  "strings"
-  "net/http"
-  "io/ioutil"
   "encoding/json"
-  "golang.org/x/oauth2/google"
-  "github.com/tenhaus/botpit/config"
-  "golang.org/x/net/context"
   "google.golang.org/cloud/pubsub"
+  "github.com/tenhaus/botpit/http"
+  "github.com/tenhaus/botpit/config"
 )
 
 const SUBSCRIBE_ROLE =  "roles/pubsub.subscriber"
@@ -17,28 +13,20 @@ const PUBLISH_ROLE =  "roles/pubsub.publisher"
 
 func GetPolicyForTopic(topicName string, policy *Policy) error {
   cfg := config.GetConfig()
-  context := context.Background()
 
   // Build the url and parameters
   urlTemplate := "https://pubsub.googleapis.com/v1/projects/%s/topics/%s:getIamPolicy"
   apiUrl := fmt.Sprintf(urlTemplate, cfg.ProjectId, topicName)
 
-  request, _ := http.NewRequest("GET", apiUrl, nil)
-  client, _ := google.DefaultClient(context, pubsub.ScopePubSub)
-  resp, err := client.Do(request)
+  resp, err := http.Get(apiUrl, pubsub.ScopePubSub)
 
   if err != nil {
     return err
   }
 
-  if resp.StatusCode == 200 {
-    contents, _ := ioutil.ReadAll(resp.Body)
-    unmarshalError := json.Unmarshal(contents, policy)
+  unmarshalError := json.Unmarshal(resp, policy)
 
-    return unmarshalError
-  }
-
-  return nil
+  return unmarshalError
 }
 
 func GrantPublish(topicName string, accountId string) error {
@@ -58,14 +46,12 @@ func RevokeSubscribe(topicName string, accountId string) error {
 }
 
 func grantRole(topicName string, accountId string, role string) error {
-  cfg := config.GetConfig()
-  context := context.Background()
+  // cfg := config.GetConfig()
+
 
   // Get the policy
   var policy Policy
-  err := GetPolicyForTopic(topicName, &policy)
-
-  if err != nil {
+  if err := GetPolicyForTopic(topicName, &policy); err != nil {
     return err
   }
 
@@ -78,22 +64,9 @@ func grantRole(topicName string, accountId string, role string) error {
 
   policyWrapper := PolicyWrapper{Policy: policy}
   postData, _ := json.Marshal(policyWrapper)
-  b := strings.NewReader(string(postData))
 
-  request, _ := http.NewRequest("POST", apiUrl, b)
-  client, _ := google.DefaultClient(context, pubsub.ScopePubSub)
-  resp, err := client.Do(request)
-
-  if err != nil {
-    return err
-  }
-
-  // Yay
-  if resp.StatusCode == 200 {
-    return nil;
-  }
-
-  return fmt.Errorf("Couldn't do it. Handle this error.", err)
+  _, err := http.Post(apiUrl, postData, pubsub.ScopePubSub);
+  return err
 }
 
 func AddAccountToPolicy(accountId string, role string, policy *Policy) {
