@@ -22,6 +22,17 @@ type PolicyBinding struct {
 type PolicyMembers []string
 type PolicyMember string
 
+
+func (bindings PolicyBindings) getBindingWithRole(role string) *PolicyBinding {
+  for _, binding := range bindings {
+    if(binding.Role == role) {
+      return &binding
+    }
+  }
+
+  return nil
+}
+
 func (bindings PolicyBindings) contains(role string) bool {
   for _, binding := range bindings {
     if(binding.Role == role) {

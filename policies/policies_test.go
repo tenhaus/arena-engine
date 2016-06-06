@@ -58,7 +58,7 @@ func TestGetPolicy(t *testing.T) {
 
 // Add the account to a policy that already has the role defined
 func TestAddAccountToPolicyWithExistingRole(t *testing.T) {
-  binding := PolicyBinding{Role: "roles/pubsub.subscriber"}
+  binding := PolicyBinding{Role: SUBSCRIBE_ROLE}
   bindings := PolicyBindings{binding}
   policy := Policy{Bindings: bindings}
 
@@ -83,16 +83,35 @@ func TestAddAccountToPolicyWithoutExistingRole(t *testing.T) {
   }
 }
 
+// Delete an account from a policy
+func TestRemoveAccountFromPolicy(t *testing.T) {
+  binding := PolicyBinding{Role: SUBSCRIBE_ROLE}
+  bindings := PolicyBindings{binding}
+  policy := Policy{Bindings: bindings}
+
+  RemoveAccountFromPolicy(serviceAccount.Email, SUBSCRIBE_ROLE, &policy)
+
+  fmt.Errorf("Finish me")
+}
+
 // Grant permissions to subscribe to a topic
-func TestGrantSubscribe(t *testing.T) {
+func TestGrantRevokeSubscribe(t *testing.T) {
   if err := GrantSubscribe(cfg.RoutingTopic, serviceAccount.Email); err != nil {
+    t.Error(err)
+  }
+
+  if err := RevokeSubscribe(cfg.RoutingTopic, serviceAccount.Email); err != nil {
     t.Error(err)
   }
 }
 
 // Grant permissions to publish to a topic
-func TestGrantPublish(t *testing.T) {
+func TestGrantRevokePublish(t *testing.T) {
   if err := GrantPublish(cfg.RoutingTopic, serviceAccount.Email); err != nil {
+    t.Error(err)
+  }
+
+  if err := RevokePublish(cfg.RoutingTopic, serviceAccount.Email); err != nil {
     t.Error(err)
   }
 }

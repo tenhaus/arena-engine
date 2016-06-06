@@ -30,7 +30,7 @@ func GrantPublish(topicName string, accountId string) error {
 }
 
 func RevokePublish(topicName string, accountId string) error {
-  return nil
+  return fmt.Errorf("No code here")
 }
 
 func GrantSubscribe(topicName string, accountId string) error {
@@ -38,12 +38,41 @@ func GrantSubscribe(topicName string, accountId string) error {
 }
 
 func RevokeSubscribe(topicName string, accountId string) error {
-  return nil
+  return fmt.Errorf("No code here")
+}
+
+func AddAccountToPolicy(accountId string, role string, policy *Policy) {
+  // If we don't already have the role, we have to add it
+  AddRoleToPolicy(role, policy)
+
+  // We know we have the role so add the account to it
+  for i, binding := range policy.Bindings {
+    if binding.Role == role && !binding.Members.contains(accountId) {
+      saAccountId := getServiceAccountString(accountId)
+      binding.Members = append(binding.Members, saAccountId)
+    }
+
+    policy.Bindings[i] = binding
+  }
+}
+
+func RemoveAccountFromPolicy(accountId string, role string, policy *Policy) {
+  // If the policy doesn't have this role our work is already done
+  if !policy.Bindings.contains(role) {
+    return
+  }
+
+  // binding := policy
+}
+
+func AddRoleToPolicy(role string, policy *Policy) {
+  if !policy.Bindings.contains(role) {
+    binding := PolicyBinding{Role: role}
+    policy.Bindings = append(policy.Bindings, binding)
+  }
 }
 
 func grantRole(topicName string, accountId string, role string) error {
-  // cfg := config.GetConfig()
-
 
   // Get the policy
   var policy Policy
@@ -63,26 +92,4 @@ func grantRole(topicName string, accountId string, role string) error {
 
   _, err := http.Post(apiUrl, postData, pubsub.ScopePubSub);
   return err
-}
-
-func AddAccountToPolicy(accountId string, role string, policy *Policy) {
-  // If we don't already have the role, we have to add it
-  AddRoleToPolicy(role, policy)
-
-  // We know we have the role so add the account to it
-  for i, binding := range policy.Bindings {
-    if binding.Role == role && !binding.Members.contains(accountId) {
-      saAccountId := getServiceAccountString(accountId)
-      binding.Members = append(binding.Members, saAccountId)
-    }
-
-    policy.Bindings[i] = binding
-  }
-}
-
-func AddRoleToPolicy(role string, policy *Policy) {
-  if !policy.Bindings.contains(role) {
-    binding := PolicyBinding{Role: role}
-    policy.Bindings = append(policy.Bindings, binding)
-  }
 }
