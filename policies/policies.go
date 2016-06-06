@@ -14,19 +14,15 @@ const PUBLISH_ROLE =  "roles/pubsub.publisher"
 func GetPolicyForTopic(topicName string, policy *Policy) error {
   cfg := config.GetConfig()
 
-  // Build the url and parameters
   urlTemplate := "https://pubsub.googleapis.com/v1/projects/%s/topics/%s:getIamPolicy"
   apiUrl := fmt.Sprintf(urlTemplate, cfg.ProjectId, topicName)
-
   resp, err := http.Get(apiUrl, pubsub.ScopePubSub)
 
   if err != nil {
     return err
   }
 
-  unmarshalError := json.Unmarshal(resp, policy)
-
-  return unmarshalError
+  return json.Unmarshal(resp, policy)
 }
 
 func GrantPublish(topicName string, accountId string) error {
