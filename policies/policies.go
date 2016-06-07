@@ -57,12 +57,25 @@ func AddAccountToPolicy(accountId string, role string, policy *Policy) {
 }
 
 func RemoveAccountFromPolicy(accountId string, role string, policy *Policy) {
+  saAccountId := getServiceAccountString(accountId)
+
   // If the policy doesn't have this role our work is already done
   if !policy.Bindings.contains(role) {
     return
   }
 
-  // binding := policy
+  binding := policy.Bindings.getBindingWithRole(role)
+
+  // If the account isn't in the members list our work is done
+  if !binding.Members.contains(saAccountId) {
+    fmt.Println("Not Found", binding.Members, saAccountId)
+    return
+  }
+
+  newMembers := binding.Members.remove(saAccountId)
+  fmt.Println(newMembers)
+
+  // update members pointer to new slice
 }
 
 func AddRoleToPolicy(role string, policy *Policy) {

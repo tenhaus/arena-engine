@@ -45,13 +45,29 @@ func (bindings PolicyBindings) contains(role string) bool {
 
 func (members PolicyMembers) contains(member string) bool {
   for _, existingMember := range members {
-    saMember := getServiceAccountString(member)
-    if saMember == existingMember {
+    if member == existingMember {
       return true
     }
   }
 
   return false
+}
+
+func (members PolicyMembers) remove(member string) []string {
+  position := -1
+
+  for i, existingMember := range members {
+    if member == existingMember {
+      position = i
+      break
+    }
+  }
+
+  if position == -1 {
+    return members
+  }
+
+  return append(members[:position], members[position+1:]...)
 }
 
 func getServiceAccountString(accountId string) string {

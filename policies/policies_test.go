@@ -85,13 +85,15 @@ func TestAddAccountToPolicyWithoutExistingRole(t *testing.T) {
 
 // Delete an account from a policy
 func TestRemoveAccountFromPolicy(t *testing.T) {
-  binding := PolicyBinding{Role: SUBSCRIBE_ROLE}
+  email := fmt.Sprintf("serviceAccount:%s", serviceAccount.Email)
+  users:= []string{email}
+  binding := PolicyBinding{Role: SUBSCRIBE_ROLE, Members: users}
   bindings := PolicyBindings{binding}
   policy := Policy{Bindings: bindings}
 
   RemoveAccountFromPolicy(serviceAccount.Email, SUBSCRIBE_ROLE, &policy)
 
-  fmt.Errorf("Finish me")
+  t.Errorf("Finish me")
 }
 
 // Grant permissions to subscribe to a topic
