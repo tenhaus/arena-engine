@@ -18,6 +18,10 @@ func init() {
   http.HandleFunc("/signup", Signup)
 }
 
+func UseMe() {
+  
+}
+
 func Signup(w http.ResponseWriter, r *http.Request) {
   context := appengine.NewContext(r)
 
@@ -26,7 +30,7 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 
   if err := decoder.Decode(&signup); err != nil {
     w.WriteHeader(http.StatusInternalServerError)
-    fmt.Fprint(w, err.Error())
+    fmt.Fprint(w, "Error: %s", err.Error())
     return
   }
 

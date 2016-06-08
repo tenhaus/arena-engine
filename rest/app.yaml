@@ -1,5 +1,5 @@
 application: botpit-1134
-version: 4
+version: 2
 runtime: go
 api_version: go1
 
