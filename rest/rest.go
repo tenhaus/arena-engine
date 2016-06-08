@@ -3,6 +3,7 @@ package rest
 import (
   "fmt"
   "net/http"
+  "io/ioutil"
   "encoding/json"
 )
 
@@ -21,10 +22,11 @@ func UseMe() {
 }
 
 func Signup(w http.ResponseWriter, r *http.Request) {
-  decoder := json.NewDecoder(r.Body)
   var signup SignupRequest
 
-  if err := decoder.Decode(&signup); err != nil {
+  b, _ := ioutil.ReadAll(r.Body)
+  fmt.Println(string(b))
+  if err := json.Unmarshal(b, &signup); err != nil {
     w.WriteHeader(http.StatusInternalServerError)
     fmt.Fprintf(w, "Error: %s", err.Error())
     return
