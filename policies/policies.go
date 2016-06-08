@@ -30,7 +30,7 @@ func GrantPublish(topicName string, accountId string) error {
 }
 
 func RevokePublish(topicName string, accountId string) error {
-  return fmt.Errorf("No code here")
+  return revokeRole(topicName, accountId, PUBLISH_ROLE);
 }
 
 func GrantSubscribe(topicName string, accountId string) error {
@@ -38,7 +38,7 @@ func GrantSubscribe(topicName string, accountId string) error {
 }
 
 func RevokeSubscribe(topicName string, accountId string) error {
-  return fmt.Errorf("No code here")
+  return revokeRole(topicName, accountId, SUBSCRIBE_ROLE);
 }
 
 func AddAccountToPolicy(accountId string, role string, policy *Policy) {
@@ -67,7 +67,6 @@ func RemoveAccountFromPolicy(accountId string, role string, policy *Policy) {
   bindingIndex := policy.Bindings.getBindingWithRole(role)
   binding := policy.Bindings[bindingIndex]
 
-
   // If the account isn't in the members list our work is done
   if !binding.Members.contains(saAccountId) {
     fmt.Println("Not Found", binding.Members, saAccountId)
@@ -83,6 +82,26 @@ func AddRoleToPolicy(role string, policy *Policy) {
     binding := PolicyBinding{Role: role}
     policy.Bindings = append(policy.Bindings, binding)
   }
+}
+
+func revokeRole(topicName string, accountId string, role string) error {
+  // Get the policy
+  var policy Policy
+  if err := GetPolicyForTopic(topicName, &policy); err != nil {
+    return err
+  }
+
+  RemoveAccountFromPolicy(accountId, role, &policy)
+
+  // Commit the policy
+  urlTemplate := "https://pubsub.googleapis.com/v1/projects/%s/topics/%s:setIamPolicy"
+  apiUrl := fmt.Sprintf(urlTemplate, cfg.ProjectId, topicName)
+
+  policyWrapper := PolicyWrapper{Policy: policy}
+  postData, _ := json.Marshal(policyWrapper)
+
+  _, err := http.Post(apiUrl, postData, pubsub.ScopePubSub);
+  return err
 }
 
 func grantRole(topicName string, accountId string, role string) error {
