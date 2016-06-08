@@ -1,5 +1,5 @@
-application: botpit-rest
-version: 1
+application: botpit-1134
+version: 3
 runtime: go
 api_version: go1
 
