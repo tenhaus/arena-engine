@@ -93,7 +93,12 @@ func TestRemoveAccountFromPolicy(t *testing.T) {
 
   RemoveAccountFromPolicy(serviceAccount.Email, SUBSCRIBE_ROLE, &policy)
 
-  t.Errorf("Finish me")
+  bindingIndex := policy.Bindings.getBindingWithRole(SUBSCRIBE_ROLE)
+  updatedBinding := policy.Bindings[bindingIndex]
+
+  if len(updatedBinding.Members) != 0 {
+    t.Error("Failed to remove the member")
+  }
 }
 
 // Grant permissions to subscribe to a topic

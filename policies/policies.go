@@ -64,7 +64,9 @@ func RemoveAccountFromPolicy(accountId string, role string, policy *Policy) {
     return
   }
 
-  binding := policy.Bindings.getBindingWithRole(role)
+  bindingIndex := policy.Bindings.getBindingWithRole(role)
+  binding := policy.Bindings[bindingIndex]
+
 
   // If the account isn't in the members list our work is done
   if !binding.Members.contains(saAccountId) {
@@ -72,10 +74,8 @@ func RemoveAccountFromPolicy(accountId string, role string, policy *Policy) {
     return
   }
 
-  newMembers := binding.Members.remove(saAccountId)
-  fmt.Println(newMembers)
-
-  // update members pointer to new slice
+  binding.Members = binding.Members.remove(saAccountId)
+  policy.Bindings[bindingIndex] = binding
 }
 
 func AddRoleToPolicy(role string, policy *Policy) {

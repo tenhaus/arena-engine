@@ -23,14 +23,14 @@ type PolicyMembers []string
 type PolicyMember string
 
 
-func (bindings PolicyBindings) getBindingWithRole(role string) *PolicyBinding {
-  for _, binding := range bindings {
+func (bindings PolicyBindings) getBindingWithRole(role string) int {
+  for index, binding := range bindings {
     if(binding.Role == role) {
-      return &binding
+      return index
     }
   }
 
-  return nil
+  return -1
 }
 
 func (bindings PolicyBindings) contains(role string) bool {
