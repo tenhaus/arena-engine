@@ -32,7 +32,7 @@ func HandleExists(handle string) error {
   q := datastore.NewQuery("Fighter").Filter("Handle =", handle)
   _, err := client.GetAll(context, q, &results)
 
-  if len(results) >= 0 {
+  if len(results) > 0 {
     return fmt.Errorf("Handle already exists")
   }
 
@@ -46,7 +46,7 @@ func EmailExists(email string) error {
   q := datastore.NewQuery("Fighter").Filter("Email =", email)
   _, err := client.GetAll(context, q, &results)
 
-  if len(results) >= 0 {
+  if len(results) > 0 {
     return fmt.Errorf("Email already exists")
   }
 
@@ -55,6 +55,7 @@ func EmailExists(email string) error {
 
 func Create(handle string, email string,
   password string, account *UserAccount) error {
+
   // Test handle length
   handleLength := len(handle)
 
@@ -62,6 +63,17 @@ func Create(handle string, email string,
     return fmt.Errorf("Handle must be between 6 and 30 characters")
   }
 
+  // Make sure handle doesn't already exists
+  if err := HandleExists(handle); err != nil {
+    return err
+  }
+
+  // Make sure email doesn't already exists
+  if err := EmailExists(email); err != nil {
+    return err
+  }
+
+  // Add the account
   hashedPass := Encrypt(password)
   client, context := config.GetClientWithContext()
 

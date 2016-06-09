@@ -85,7 +85,17 @@ func TestEmailExists(t *testing.T) {
 // Make sure we get an error if someone tries to use
 // a handle that already exists
 func TestHandleAlreadyInUse(t *testing.T) {
-  t.Error("Make me")
+  handle := "test_handleinuse"
+  email  := "test_handleinuse@test.com"
+
+  var account UserAccount
+  if err := Create(handle, email, "timisadork", &account); err != nil {
+    t.Error(err)
+  }
+
+  if err := Create(handle, email, "timisadork", &account); err == nil {
+    t.Errorf("Created the same account twice")
+  }
 }
 
 // Make sure we get an error if someone tries to use
