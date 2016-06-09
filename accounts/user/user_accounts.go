@@ -82,13 +82,13 @@ func Create(handle string, email string,
   account.Email = email
   account.Password = hashedPass
 
-  if key, err := client.Put(context, k, account); err != nil {
-    return err
-  } else {
+  key, err := client.Put(context, k, account);
+
+  if err == nil {
     account.Key = key.Encode()
   }
 
-  return nil
+  return err
 }
 
 func Delete(encodedId string) error {
