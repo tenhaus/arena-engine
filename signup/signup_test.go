@@ -25,11 +25,3 @@ func TestSignup(t *testing.T) {
     t.Error(err)
   }
 }
-
-func TestSignupDuplicateNameError(t *testing.T) {
-  t.Errorf("Make me")
-}
-
-func TestPasswordEncryption(t *testing.T) {
-  t.Errorf("Make me")
-}
