@@ -2,8 +2,8 @@ package signup
 
 import (
   "fmt"
-  "github.com/tenhaus/botpit/useraccounts"
-  "github.com/tenhaus/botpit/serviceaccounts"
+  "github.com/tenhaus/botpit/accounts/user"
+  "github.com/tenhaus/botpit/accounts/bot"
   "github.com/tenhaus/botpit/bus"
   "github.com/tenhaus/botpit/policies"
 )
@@ -14,22 +14,22 @@ import (
 // Create the game routing topic √
 // Set permissions √
 func Signup(handle string, email string, password string,
-  userAccount *useraccounts.UserAccount,
-  serviceAccount *serviceaccounts.ServiceAccount) error {
+  userAccount *user.UserAccount,
+  serviceAccount *bot.ServiceAccount) error {
 
   // Create the user account
-  if err := useraccounts.Create(handle, email,
+  if err := user.Create(handle, email,
     password, userAccount); err != nil {
     return fmt.Errorf("Error creating the user account %v", err)
   }
 
   // Create the service account
-  if err := serviceaccounts.Create(handle, serviceAccount); err != nil {
+  if err := bot.Create(handle, serviceAccount); err != nil {
     return fmt.Errorf("Error creating the service account %v", err)
   }
 
   // Get the key for the service account
-  if err := serviceaccounts.CreateKey(serviceAccount); err != nil {
+  if err := bot.CreateKey(serviceAccount); err != nil {
     return fmt.Errorf("Error creating the key %v", err)
   }
 
@@ -55,16 +55,16 @@ func Signup(handle string, email string, password string,
   return nil
 }
 
-func KillUser(userAccount useraccounts.UserAccount,
-  serviceAccount serviceaccounts.ServiceAccount) error {
+func KillUser(userAccount user.UserAccount,
+  serviceAccount bot.ServiceAccount) error {
 
   // Delete the user account
-  if err := useraccounts.Delete(userAccount.Key); err != nil {
+  if err := user.Delete(userAccount.Key); err != nil {
     return err
   }
 
   // Delete the service account
-  if err := serviceaccounts.Delete(serviceAccount.Email); err != nil {
+  if err := bot.Delete(serviceAccount.Email); err != nil {
     return err
   }
 

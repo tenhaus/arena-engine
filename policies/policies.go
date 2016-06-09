@@ -92,6 +92,7 @@ func revokeRole(topicName string, accountId string, role string) error {
   }
 
   RemoveAccountFromPolicy(accountId, role, &policy)
+  cfg := config.GetConfig()
 
   // Commit the policy
   urlTemplate := "https://pubsub.googleapis.com/v1/projects/%s/topics/%s:setIamPolicy"
@@ -105,7 +106,8 @@ func revokeRole(topicName string, accountId string, role string) error {
 }
 
 func grantRole(topicName string, accountId string, role string) error {
-
+  cfg := config.GetConfig()
+  
   // Get the policy
   var policy Policy
   if err := GetPolicyForTopic(topicName, &policy); err != nil {

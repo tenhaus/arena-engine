@@ -1,9 +1,10 @@
 package rest
 
 import (
-  "fmt"
   "net/http"
   "github.com/tenhaus/botpit/signup"
+  "github.com/tenhaus/botpit/accounts/user"
+  "github.com/tenhaus/botpit/accounts/bot"
 )
 
 func init() {
@@ -14,10 +15,18 @@ func UseMe() {
 }
 
 func Signup(w http.ResponseWriter, r *http.Request) {
-  r.ParseForm()
-  email := r.Form["email"]
-  password := r.Form["password"]
-  handle := r.Form["handle"]
+  var userAccount user.UserAccount
+  var serviceAccount bot.ServiceAccount
 
-  err := signup.Signup(handle, email, password)
+  r.ParseForm()
+  email := r.FormValue("email")
+  password := r.FormValue("password")
+  handle := r.FormValue("handle")
+
+  err := signup.Signup(handle, email, password,
+    &userAccount, &serviceAccount)
+
+  if err != nil {
+    
+  }
 }
