@@ -4,6 +4,7 @@ import (
   "fmt"
   "google.golang.org/cloud/datastore"
   "github.com/tenhaus/botpit/config"
+  "golang.org/x/crypto/bcrypt"
 )
 
 const USER_ACCOUNT_KIND = "Fighter"
@@ -12,8 +13,16 @@ type UserAccount struct {
   Key string
   Handle string
   Email string
-  Password string
+  Password []byte
   RoutingTopic string
+}
+
+func Encrypt(password string) []byte {
+  bPass := []byte(password)
+  hashedPassword, _ := bcrypt.GenerateFromPassword(bPass,
+    bcrypt.DefaultCost)
+
+  return hashedPassword
 }
 
 func Create(handle string, email string,
@@ -25,12 +34,13 @@ func Create(handle string, email string,
     return fmt.Errorf("Handle must be between 6 and 30 characters")
   }
 
+  hashedPass := Encrypt(password)
   client, context := config.GetClientWithContext()
 
   k := datastore.NewKey(context, USER_ACCOUNT_KIND, "", 0, nil)
   account.Handle = handle
   account.Email = email
-  account.Password = password
+  account.Password = hashedPass
 
   if key, err := client.Put(context, k, account); err != nil {
     return err
