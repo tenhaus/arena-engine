@@ -2,6 +2,7 @@ package signup
 
 import (
   "fmt"
+  "strings"
   "github.com/tenhaus/botpit/accounts/user"
   "github.com/tenhaus/botpit/accounts/bot"
   "github.com/tenhaus/botpit/bus"
@@ -16,6 +17,7 @@ import (
 func Signup(handle string, email string, password string,
   userAccount *user.UserAccount,
   serviceAccount *bot.ServiceAccount) error {
+
 
   // Create the user account
   if err := user.Create(handle, email,
@@ -74,4 +76,15 @@ func KillUser(userAccount user.UserAccount,
   }
 
   return nil
+}
+
+func IsReservedHandle(handle string) bool {
+  return strings.HasPrefix(handle, "test_")
+}
+
+func IsReservedEmail(email string) bool {
+  index := strings.Index(email, "testytesterson")
+  hasPrefix := strings.HasPrefix(email, "test_")
+
+  return index != -1 && hasPrefix
 }
