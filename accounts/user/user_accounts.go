@@ -39,8 +39,18 @@ func HandleExists(handle string) error {
   return err
 }
 
-func EmailExists(handle string) error {
-  return nil
+func EmailExists(email string) error {
+  client, context := config.GetClientWithContext()
+
+  var results []UserAccount
+  q := datastore.NewQuery("Fighter").Filter("Email =", email)
+  _, err := client.GetAll(context, q, &results)
+
+  if len(results) >= 0 {
+    return fmt.Errorf("Email already exists")
+  }
+
+  return err
 }
 
 func Create(handle string, email string,

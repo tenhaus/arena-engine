@@ -65,7 +65,21 @@ func TestHandleExists(t *testing.T) {
 
 // Email Exists works ?
 func TestEmailExists(t *testing.T) {
-  t.Error("Make me")
+  handle := "test_handleexists"
+  email  := "test_handleexists@test.com"
+
+  var account UserAccount
+  if err := Create(handle, email, "timisadork", &account); err != nil {
+    t.Error(err)
+  }
+
+  if err := EmailExists(email); err == nil {
+    t.Error("Handle exists failed")
+  }
+
+  if err := Delete(account.Key); err != nil {
+    t.Error(err)
+  }
 }
 
 // Make sure we get an error if someone tries to use
