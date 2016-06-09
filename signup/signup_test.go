@@ -37,11 +37,14 @@ func TestIsReservedHandle(t *testing.T) {
 }
 
 func TestIsReservedEmail(t *testing.T) {
-  if isReserved := IsReservedEmail("test_abcd@testytesterson.com"); !isReserved {
+  reservedEmail := "test_abcd@testytesterson.com"
+  correctEmail := "abcd_nottest@google.com"
+  
+  if isReserved := IsReservedEmail(reservedEmail); !isReserved {
     t.Errorf("Able to sign up with reserved email")
   }
 
-  if isReserved := IsReservedEmail("abcd_nottest@google.com"); isReserved {
+  if isReserved := IsReservedEmail(correctEmail); isReserved {
     t.Errorf("Non-reserved email rejected")
   }
 }
