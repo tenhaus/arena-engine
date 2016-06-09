@@ -25,6 +25,24 @@ func Encrypt(password string) []byte {
   return hashedPassword
 }
 
+func HandleExists(handle string) error {
+  client, context := config.GetClientWithContext()
+
+  var results []UserAccount
+  q := datastore.NewQuery("Fighter").Filter("Handle =", handle)
+  _, err := client.GetAll(context, q, &results)
+
+  if len(results) >= 0 {
+    return fmt.Errorf("Handle already exists")
+  }
+
+  return err
+}
+
+func EmailExists(handle string) error {
+  return nil
+}
+
 func Create(handle string, email string,
   password string, account *UserAccount) error {
   // Test handle length
