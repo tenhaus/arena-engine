@@ -1,15 +1,4 @@
-# Botpit
-
-Right now everything runs off of my Google Cloud account, but could run off someone else's account by changing config and downloading a new token to botpit-development-authentication.json
-
-Currently using iam api, pubsub, storage
-
-export BOTPIT_ENV="development"
-
-export GOOGLE_APPLICATION_CREDENTIALS="/Users/chris/Code/go/src/github.com/tenhaus/botpit/botpit-development-authentication.json"
-
-export BOTPIT_CONFIG="/Users/chris/Code/go/src/github.com/tenhaus/botpit/config.json"
-
+# Arena Engine
 
 ### TODO
 * √ Create user
