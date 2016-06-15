@@ -20,10 +20,8 @@ export BOTPIT_CONFIG="/Users/chris/Code/go/src/github.com/tenhaus/botpit/config.
 * √ Config
 * √ Restrict service account permissions to only send/receive on topics
 * √ Pull token and send to client
-* Client
-* Deploy to compute engine (deployment works, but don't know how to start the service yet)
-* Rest route and function for /signup
-* More 
+* √ Deploy to app engine
+* √ Rest route and function for /signup
 
 ## Purpose
 
