@@ -9,7 +9,7 @@ import (
   "io/ioutil"
   "encoding/json"
   "net/http/httptest"
-  "github.com/tenhaus/botpit/accounts/bot"
+  "github.com/tenhaus/arena-engine/accounts/bot"
 )
 
 var email string

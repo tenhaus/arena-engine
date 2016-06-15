@@ -7,7 +7,7 @@ import (
   "log"
   "golang.org/x/net/context"
   "google.golang.org/cloud/pubsub"
-  "github.com/tenhaus/botpit/config"
+  "github.com/tenhaus/arena-engine/config"
 )
 
 func CreateRoutingTopicForHandle(handle string) (string, error) {

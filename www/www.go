@@ -4,9 +4,9 @@ import (
   "os"
   "net/http"
   "encoding/json"
-  "github.com/tenhaus/botpit/signup"
-  "github.com/tenhaus/botpit/accounts/user"
-  "github.com/tenhaus/botpit/accounts/bot"
+  "github.com/tenhaus/arena-engine/signup"
+  "github.com/tenhaus/arena-engine/accounts/user"
+  "github.com/tenhaus/arena-engine/accounts/bot"
   // "github.com/gorilla/mux"
 )
 

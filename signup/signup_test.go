@@ -1,8 +1,8 @@
 package signup
 
 import (
-	"github.com/tenhaus/botpit/accounts/bot"
-	"github.com/tenhaus/botpit/accounts/user"
+	"github.com/tenhaus/arena-engine/accounts/bot"
+	"github.com/tenhaus/arena-engine/accounts/user"
 	"testing"
 )
 

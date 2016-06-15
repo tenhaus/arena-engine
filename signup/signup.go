@@ -2,10 +2,10 @@ package signup
 
 import (
 	"fmt"
-	"github.com/tenhaus/botpit/accounts/bot"
-	"github.com/tenhaus/botpit/accounts/user"
-	"github.com/tenhaus/botpit/bus"
-	"github.com/tenhaus/botpit/policies"
+	"github.com/tenhaus/arena-engine/accounts/bot"
+	"github.com/tenhaus/arena-engine/accounts/user"
+	"github.com/tenhaus/arena-engine/bus"
+	"github.com/tenhaus/arena-engine/policies"
 	"strings"
 )
 
