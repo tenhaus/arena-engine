@@ -4,8 +4,8 @@ import (
   "fmt"
   "encoding/json"
   "google.golang.org/cloud/pubsub"
-  "github.com/tenhaus/botpit/util/http"
-  "github.com/tenhaus/botpit/config"
+  "github.com/tenhaus/arena-engine/util/http"
+  "github.com/tenhaus/arena-engine/config"
 )
 
 const SUBSCRIBE_ROLE =  "roles/pubsub.subscriber"

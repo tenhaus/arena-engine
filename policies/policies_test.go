@@ -5,8 +5,8 @@ import (
   "fmt"
   "strings"
   "testing"
-  "github.com/tenhaus/botpit/config"
-  "github.com/tenhaus/botpit/accounts/bot"
+  "github.com/tenhaus/arena-engine/config"
+  "github.com/tenhaus/arena-engine/accounts/bot"
 )
 
 var cfg config.EnvironmentConfiguration

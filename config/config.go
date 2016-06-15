@@ -48,7 +48,7 @@ func GetClient() (*datastore.Client, error) {
 }
 
 func GetConfig() EnvironmentConfiguration {
-  environment := os.Getenv("BOTPIT_ENV")
+  environment := os.Getenv("ARENA_ENV")
   config := configForEnvironment(environment)
   return config
 }
@@ -81,7 +81,7 @@ func GetIAMContext() (context.Context, error) {
 
 
 func configForEnvironment(environment string) EnvironmentConfiguration {
-  configPath := os.Getenv("BOTPIT_CONFIG")
+  configPath := os.Getenv("ARENA_CONFIG")
   file, readError := ioutil.ReadFile(configPath)
 
   if readError != nil {

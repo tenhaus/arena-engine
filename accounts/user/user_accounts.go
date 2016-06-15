@@ -3,7 +3,7 @@ package user
 import (
   "fmt"
   "google.golang.org/cloud/datastore"
-  "github.com/tenhaus/botpit/config"
+  "github.com/tenhaus/arena-engine/config"
   "golang.org/x/crypto/bcrypt"
 )
 

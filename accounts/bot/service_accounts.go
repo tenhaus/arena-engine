@@ -8,7 +8,7 @@ import (
   "encoding/json"
   "golang.org/x/net/context"
   "golang.org/x/oauth2/google"
-  "github.com/tenhaus/botpit/config"
+  "github.com/tenhaus/arena-engine/config"
 )
 
 func Create(handle string, account *ServiceAccount) error {
