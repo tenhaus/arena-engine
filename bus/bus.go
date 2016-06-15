@@ -49,7 +49,7 @@ func subscribe(context context.Context, subscription string,
       msgs, err := pubsub.PullWait(context, subscription, 10)
 
       if err != nil {
-        log.Fatalf("could not pull: %v", err)
+        log.Fatalf("Could not pull: %v", err)
       }
 
       for _, m := range msgs {

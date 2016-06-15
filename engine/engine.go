@@ -1,12 +1,27 @@
 package engine
 
 import (
-  "os"
   "fmt"
+  "time"
+  "github.com/tenhaus/arena-engine/bus"
+  "github.com/tenhaus/arena-engine/controller"
 )
 
 func Start() {
-  environment := os.Getenv("ARENA_ENV")
+  controlChannel := make(chan string)
+  go bus.OpenPit(controlChannel)
+  go controller.Start(controlChannel)
 
-  fmt.Println("Start -", environment)
+  timer := time.Tick(100 * time.Millisecond)
+
+  // main loop
+  // Check for new game requests
+  // Check the status of existing games
+  // Create or close games if needed
+  for range timer {
+    msg := <-controlChannel
+    fmt.Println(msg)
+  }
+
+
 }
