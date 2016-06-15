@@ -1,4 +1,4 @@
-package rest
+package www
 
 import (
   "os"
@@ -7,7 +7,7 @@ import (
   "github.com/tenhaus/botpit/signup"
   "github.com/tenhaus/botpit/accounts/user"
   "github.com/tenhaus/botpit/accounts/bot"
-  "github.com/gorilla/mux"
+  // "github.com/gorilla/mux"
 )
 
 func init() {
@@ -19,9 +19,9 @@ func init() {
 }
 
 func Serve() {
-  router := mux.NewRouter().StrictSlash(true)
-  router.HandleFunc("/signup", SignupHandler).Methods("POST")
-  http.ListenAndServe(":8000", router)
+  // router := mux.NewRouter().StrictSlash(true)
+  http.HandleFunc("/signup", SignupHandler)
+  // http.ListenAndServe(":8000", router)
 }
 
 func SignupHandler(w http.ResponseWriter, r *http.Request) {

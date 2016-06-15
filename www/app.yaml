@@ -1,0 +1,9 @@
+application: botpit-1134
+version: 2
+runtime: go
+api_version: go1
+
+handlers:
+  - url: /.*
+    secure: always
+    script: _go_app
