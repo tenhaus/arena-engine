@@ -4,7 +4,7 @@ import (
   "fmt"
   "encoding/json"
   "google.golang.org/cloud/pubsub"
-  "github.com/tenhaus/botpit/http"
+  "github.com/tenhaus/botpit/util/http"
   "github.com/tenhaus/botpit/config"
 )
 
@@ -107,7 +107,7 @@ func revokeRole(topicName string, accountId string, role string) error {
 
 func grantRole(topicName string, accountId string, role string) error {
   cfg := config.GetConfig()
-  
+
   // Get the policy
   var policy Policy
   if err := GetPolicyForTopic(topicName, &policy); err != nil {
